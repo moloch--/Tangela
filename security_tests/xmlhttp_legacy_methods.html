@@ -1,0 +1,48 @@
+<body onload="do_tests()">
+<h1>XMLHttpRequest (legacy ActiveX) permitted methods</h1>
+
+<b>Test results:</b><br>
+<ul id=log>
+</ul>
+
+<script>
+
+var try_methods = [
+  "CONNECT",
+  "DELETE",
+  "GET",
+  "HEAD",
+  "LOCK",
+  "MKCOL",
+  "MOVE",
+  "OPTIONS",
+  "POST",
+  "PROPFIND",
+  "PROPPATCH",
+  "PUT",
+  "UNLOCK",
+  "TRACE",
+  "XARBITRARYMETHOD",
+];
+
+function do_tests() {
+
+  for (i=0;i<try_methods.length;i++) {
+
+    try {
+      var x;
+      if (!window.ActiveXObject) alert('ActiveXObject-capable browser required for this test.');
+      x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+      x.open(try_methods[i], '.empty_file',false);
+      x.send(null);
+      document.getElementById('log').innerHTML += '<li> Method <code>' + try_methods[i] + '</code> works (server code ' + x.status + ').';
+    } catch (e) {
+      document.getElementById('log').innerHTML += '<li> <font color=crimson>Method <code>' + try_methods[i] + '</code> results in an exception.</font>';
+    }
+  }
+
+  document.getElementById('log').innerHTML += '<li> <font color=gray>All tests done.</font>';
+
+}
+</script>
+

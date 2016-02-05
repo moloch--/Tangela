@@ -1,0 +1,33 @@
+<h1>Mixed content tests (be sure to load this test over https)</h1>
+
+<li> TEST 1: If this image is shown, mixed-content IMG inclusion works: 
+<img src="http://{{ SERVER_NAME }}/{{ SERVER_PATH }}/.test_img.jpg">
+<p>
+
+<hr />
+<li> TEST 2: If the following text read 'WORKS', mixed-content SCRIPT inclusion works: 
+<span id=sout></span>
+<script src="http://{{ SERVER_NAME }}/{{ SERVER_PATH }}/.test_script.js"></script>
+<p>
+
+<hr />
+<li> TEST 3: If the following text is shown in red, mixed-content stylesheet inclusion works: 
+<link rel=stylesheet href="http://{{ SERVER_NAME }}/{{ SERVER_PATH }}/.test_style.css">
+<span class=foo>TEST</span>
+<p>
+
+<hr />
+<li> TEST 4: If the following reads 'HELLO WORLD', mixed-content EMBEDs work:
+<embed src="http://{{ SERVER_NAME }}/{{ SERVER_PATH }}/.try_valid_swf.php?application/x-shockwave-flash" type="application/x-shockwave-flash" height=80 width=400></embed>
+<p>
+
+<hr />
+<li> TEST 5: If the following reads 'HELLO WORLD', mixed-content APPLETs work:
+<applet codebase="http://{{ SERVER_NAME }}/{{ SERVER_PATH }}/file_restrictions/" code="java_test.class"></applet>
+<p>
+
+<hr />
+<li> TEST 6: If the following reads 'HELLO', mixed-content IFRAMEs work:
+<iframe src="http://{{ SERVER_NAME }}/{{ SERVER_PATH }}/.test_file.txt"></iframe>
+<p>
+

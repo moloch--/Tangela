@@ -1,0 +1,36 @@
+<h1>UI redress tests</h1>
+<body onload="setInterval('pulsate()',50)" style="margin: 20">
+
+<script>
+var clk = 0;
+
+function pulsate() {
+  document.getElementById('fr').style.opacity = Math.sin(clk / 8.0);
+  clk++;
+}
+</script>
+
+TEST 1A: If the large button below appears and disappears, <code>opacity</code> is supported.<br>
+TEST 1B: If so, and if trying to click on the large button causes a pop-up message to appear, UI dredress is possible.
+<p>
+<iframe id=fr style="z-index: 0; height: 200; width: 400; position: absolute; left: 20" src="http://[SERVER_IP]/[SERVER_PATH]/.redress_target.html">
+</iframe>
+<div style="z-index: 10; height: 202; width: 402; border: 1px solid red; background-color: #FFFFC0">
+</div>
+<br clear=all>
+TEST 2: If the same button is shown here partly covered by a pink square, but remains clickable in the visible part,
+another variant of UI redress is possible.<p>
+<iframe style="z-index: 0; height: 200; width: 400; position: absolute; left: 20" src="http://[SERVER_IP]/[SERVER_PATH]/.redress_target.html">
+</iframe>
+<div style="z-index: 10; height: 202; width: 200; position: absolute; left: 220; border: 1px solid red; background-color: pink">
+</div>
+<div style="height: 202"></div>
+<p>
+TEST 3: If clicking on <input type=submit value="this button" onclick="frames['sc'].scrollBy(0,100)"> scrolls this frame down, <code>scrollBy</code>
+positioning is possible:<p>
+<iframe name=sc height=200 width=400 src="http://[SERVER_IP]/[SERVER_PATH]/.redress_target2.html">
+</iframe>
+<p>
+TEST 4: If this frame is NOT displayed from the first line, anchor scrolling is possible:<p>
+<iframe height=200 width=400 src="http://[SERVER_IP]/[SERVER_PATH]/.redress_target2.html#scrollme">
+</iframe>

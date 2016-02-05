@@ -1,0 +1,23 @@
+<h1>Connection timeout test (may need several minutes to complete, sorry)</h1>
+<script>
+var time_taken = 0;
+var check = false;
+
+var t;
+
+t = setInterval('verify()',1000);
+
+function verify() {
+
+  if (document.getElementById('i').complete || check) {
+    alert('Resource load timeout: about ' + time_taken + ' seconds');
+    clearInterval(t);
+  }
+
+  time_taken++;
+
+}
+
+</script>
+
+<img src=".stall.php" onload="check=true" onerror="check=true" onabort="check=true" id=i>

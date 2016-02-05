@@ -1,0 +1,32 @@
+{% extends main.html %}
+
+{% block title %}Crash Tests{% end %}
+
+{% block content %}
+    <h1>
+        <i class="fa fa-fw fa-bug"></i>
+        Crash Tests
+    </h1>
+    <hr />
+    <table class="table table-striped table-responsive">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Test Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for index, test in enumerate(tests) %}
+                <tr id="{{ test.replace('.html', '').lower() }}">
+                    <td><strong>{{ index + 1 }}</strong></td>
+                    <td>
+                        <a class="btn btn-primary btn-sm" type="button" href="/crash_tests/{{ test }}" target="_blank">
+                            {{ test.replace('.html', '').replace('_', ' ').title() }}
+                            <i class="fa fa-fw fa-external-link"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% end %}
+        </tbody>
+    </table>
+{% end %}

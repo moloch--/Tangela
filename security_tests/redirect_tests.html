@@ -1,0 +1,72 @@
+<h1>Redirection tests</h1>
+
+<h3>HTTP 30x <code>Location</code> tests</h3>
+
+<li> Test 1: Redirection to file:/// (Windows) - displays <code>c:\boot.ini</code> or <code>/etc/hosts</code>:<br>
+<iframe src=".redirect.php?file:///c:/boot.ini"></iframe>
+<iframe src=".redirect.php?file:///etc/hosts"></iframe>
+<p>
+
+<li> Test 2: Redirection to javascript: - <code>123</code> means success:<br>
+<iframe src=".redirect.php?javascript:123"></iframe>
+<p>
+
+<li> Test 3: Redirection to data: - <code>HELLO WORLD</code> means success:<br>
+<iframe src=".redirect.php?data:text/html,HELLO%20WORLD"></iframe>
+<p>
+
+<h3>HTTP 200 <code>Refresh</code> tests</h3>
+
+<li> Test 4: Redirection to file:/// (Windows) - displays <code>c:\boot.ini</code> or <code>/etc/hosts</code>:<br>
+<iframe src=".redirect2.php?file:///c:/boot.ini"></iframe>
+<iframe src=".redirect2.php?file:///etc/hosts"></iframe>
+<p>
+
+<li> Test 5: Redirection to javascript: - <code>123</code> means success:<br>
+<iframe src=".redirect2.php?javascript:123"></iframe>
+<p>
+
+<li> Test 6: Redirection to data: - <code>HELLO WORLD</code> means success:<br>
+<iframe src=".redirect2.php?data:text/html,HELLO%20WORLD" security=restricted></iframe>
+<p>
+
+<h3><code>XMLHttpRequest tests</code></h3>
+
+<li> Test 7: Same-origin XMLHttpRequest redirection supported: <span id=sx>no</span><p>
+
+<li> Test 8: Different-origin XMLHttpRequest redirection supported: <span id=dx>no</span><p>
+
+<script>
+
+var x;
+
+if (window.XMLHttpRequest)
+  x = new XMLHttpRequest();
+else
+  x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+
+try {
+  x.open('GET','.redirect.php?http://[SERVER_NAME]/[SERVER_PATH]/.test_file.txt',false);
+  x.send(null);
+  if (x.responseText.indexOf('HELLO') != -1) 
+    document.getElementById('sx').innerHTML = 'YES';
+  else if (x.responseText.indexOf('REDIRBODY') != -1)
+    document.getElementById('sx').innerHTML = 'no (response shown)';
+} catch (e) { }
+
+if (window.XMLHttpRequest)
+  x = new XMLHttpRequest();
+else
+  x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+
+try {
+  x.open('GET','.redirect.php?http://[SERVER_IP]/[SERVER_PATH]/.test_file.txt',false);
+  x.send(null);
+  if (x.responseText.indexOf('HELLO') != -1) 
+    document.getElementById('dx').innerHTML = 'YES';
+  else if (x.responseText.indexOf('REDIRBODY') != -1)
+    document.getElementById('dx').innerHTML = 'no (response shown)';
+
+} catch (e) { }
+
+</script>

@@ -1,0 +1,12 @@
+<h1>ftp:// cookies test</h1>
+
+This is a manual test procedure:<p>
+
+<li> Click on <a href="ftp://ftp.icm.edu.pl/" target="ftptest">this link</a> to open a new window.
+<li> Type <code>javascript:document.cookie="HELLOWORLD=1;path=/";alert(document.cookie);</code> in the URL bar of that window.
+<li> If no pop-up dialog comes, or an empty one appears, ftp:// cookies are not supported. In such a case, stop here. Otherwise, ftp:// cookies work.
+<li> Otherwise, <a href="http://ftp.icm.edu.pl/" target="ftptest">click here</a> to open a new page in that window.
+<li> Type <code>javascript:alert(document.cookie)</code> in that window. If a dialog box with "HELLOWORLD" comes up, ftp:// cookies are not
+context-separated from http:// cookies (otherwise, they are).
+
+

@@ -1,0 +1,75 @@
+<script>
+var a = 0;
+var valid_chars = [];
+
+function tochar(x) {
+  var p;
+
+  if (x <= 32 || x > 126) {
+    p = x.toString(16);
+    if (p.length == 1) p = '0' + p;
+    p = '\\x' + p;
+  } else {
+    p = String.fromCharCode(x);
+    if (p == '<') p = '&lt;'; else
+    if (p == '>') p = '&gt;'; else
+    if (p == '&') p = '&amp;';
+  }
+
+  return p;
+
+}
+
+function update_valid() {
+  var ostr = '';
+  var x = 0, px;
+
+  while (x < 256) {
+
+    if (valid_chars[x] != 1) { x++; continue; }
+
+    ostr += ' ' + tochar(x);
+  
+    px = x;
+    while (valid_chars[x] == 1) x++;
+
+    if (x - px > 2) ostr += '-' + tochar(x-1); else
+    if (x - px > 1) ostr += ' ' + tochar(x-1);
+
+  }
+
+  document.getElementById('output').innerHTML = ostr;
+
+}
+    
+function dotest() {
+
+  document.getElementById('sandbox').innerHTML = '<img id=success name="hello&lt' + String.fromCharCode(a) + 'blarg">blarg';
+
+  try {
+    var x = document.getElementById('success');
+    if (x.name.indexOf('hello<') != -1) throw 1;
+    valid_chars[a] = 1;
+    update_valid();
+  } catch (e) { }
+
+  document.getElementById('status').innerHTML = 'Now testing: ' + a + ' of 256';
+
+  a++;
+  if (a < 256) setTimeout('dotest()',1);
+
+}
+</script>
+
+<h1>HTML entity names</h1>
+
+Status:
+<pre id=status></pre><p>
+
+List of characters permitted in named HTML entities:
+<pre id=output></pre>
+<p>
+
+<input type=submit onclick="dotest()" value="Start testing">
+
+<div id=sandbox></div>

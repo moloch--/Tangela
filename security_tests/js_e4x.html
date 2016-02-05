@@ -1,0 +1,10 @@
+<body onload="">
+<h1>E4X support test</h1>
+<script>
+try {
+  eval("<foo><bar>1</bar><baz>2</baz></foo>");
+  alert("E4X is supported.");
+} catch (e) {
+  alert("No E4X support found.");
+}
+</script>

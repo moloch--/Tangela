@@ -1,0 +1,19 @@
+<h1>HTTP authentication tests</h1>
+
+<li>TEST 1: <a href="http://foo:bar@[SERVER_NAME]/[SERVER_PATH]/.auth_test.php?DID%20NOT%20WORK" target="_blank">Click here</a>. If you do not get
+prompted for authentication, and no error is displayed, link-embedded credentials work. If you get prompted, get an error, or nothing happens, they
+are not.<p>
+
+<li>TEST 2: <a href="http://[SERVER_NAME]/[SERVER_PATH]/.auth_test.php?testrealm1" target="_blank">Click here</a> and enter any credentials you like.
+Then <a target="_blank" href="http://[SERVER_IP]/[SERVER_PATH]/.auth_test.php?testrealm1">click here</a>; if you get prompted for password again, 
+authentication is bound to host name.<p>
+
+<li>TEST 3A: <a href="http://[SERVER_NAME]/[SERVER_PATH]/.auth_test.php?testrealm2" target="_blank">Click here</a> and enter any credentials you like.
+NOTE: If you do not get prompted, but are taken to "worked" page instead, credentials are not bound to realms at all.<p>
+<li>TEST 3B: Next, <a target="_blank" href="https://[SERVER_NAME]/[SERVER_PATH]/.auth_test.php?testrealm2">click here</a>; if you get prompted for password again, authentication
+is bound to port or protocol.<p>
+
+<li>TEST 4: <a href="http://[SERVER_NAME]/[SERVER_PATH]/.auth_test_ntlm.php" target="_blank">Click here</a>. If you get prompted for
+password, NTLM authentication presumably works.
+
+

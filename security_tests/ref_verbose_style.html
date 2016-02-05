@@ -1,0 +1,13 @@
+<h1>Verbose onerror handler tests (stylesheets)</h1>
+If a pop-up appears and contains any information beyond a generic 'syntax error', and contains any information
+that reveals some data about the structure of the source file (<code>HELLO</code>), then this is more
+verbose than desisrable.
+<p>
+[If nothing happens, assume no verbose output]
+<script>
+window.onerror = function(a,b,c) {
+  alert('Error message provided to scripts: \n' + a + '\n' + b + ':' + c);
+}
+</script>
+<link rel=stylesheet href="http://[SERVER_IP]/[SERVER_PATH]/.test_file.txt">
+

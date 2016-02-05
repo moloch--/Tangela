@@ -1,0 +1,56 @@
+<body onload="setInterval('update_status()',250);">
+Test results (only meaningful after button pressed):
+<p>
+<ul id=out></ul>
+<script>
+var private_var = 1;
+
+function update_status() {
+
+  var str = '';
+
+  if (opener == 'SUCCESS')
+    str += '<li> Setting .opener across domain POSSIBLE.';
+  else
+    str += '<li> Setting .opener across domain not possible.';
+
+  if (name == 'SUCCESS')
+    str += '<li> Setting .name across domain POSSIBLE.';
+  else
+    str += '<li> Setting .name across domain not possible.';
+
+  try {
+    window.frameElement.elem_func();
+    str += '<li> Calling functions across domain (on frameElement) POSSIBLE.';
+  } catch (e) {
+    str += '<li> Calling functions across domain (on frameElement) not possible.';
+  }  
+
+  try {
+    top.test_funct_call2();
+    str += '<li> Calling functions across domain (child &rarr; parent) POSSIBLE.';
+  } catch (e) {
+    str += '<li> Calling functions across domain (child &rarr; parent) not possible.';
+  }  
+
+  try {
+    top.test_funct_set2 = function () { };
+  } catch (e) {
+  }
+
+  try {
+    test_funct_set();
+    str += '<li> Setting functions across domain (parent &rarr; child) POSSIBLE.';
+  } catch (e) {
+    str += '<li> Setting functions across domain (parent &rarr; child) not possible.';
+  }
+
+
+  document.getElementById('out').innerHTML = str;
+
+}
+
+function test_funct_call() {
+}
+
+</script>

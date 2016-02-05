@@ -1,0 +1,52 @@
+<h1>Javascript non-DOM tests</h1>
+
+<div id=out></div>
+
+<script>
+
+  function log(s) { document.getElementById('out').innerHTML += '<li>' + s + '<br>' }
+
+  try {
+    if (({e: eval})['e']('true'))
+      log('eval() <font color=teal>CAN</font> be used as a member of an object');
+    else
+      throw 1;
+  } catch(e) {
+    log('eval() <font color=teal>CAN NOT</font> be used as a member of an object');
+  }
+
+  try {
+    if ((function(e) {return e('true')})(eval))
+      log('eval() <font color=teal>CAN</font> be used as a reference');
+    else
+      throw 1;
+  } catch(e) {
+    log('eval() <font color=teal>CAN NOT</font> be used as a reference');
+  }
+
+  PROPERTIES_ = [
+  '__defineGetter__',
+  '__defineSetter__',
+  '__lookupGetter__',
+  '__lookupSetter__',
+  '__proto__',
+  'watch'
+  ]
+
+  for (i in PROPERTIES_) {
+    var prop = PROPERTIES_[i];
+    try {
+      if (({})[prop])
+      log('Objects <font color=teal>HAVE</font> the ' + prop + ' property');
+      else
+      throw 1;
+      } catch(e) {
+      log('Objects <font color=teal>DO NOT HAVE</font> the ' + prop + ' property');
+    }
+  }
+
+</script>
+
+</body>
+</html>
+

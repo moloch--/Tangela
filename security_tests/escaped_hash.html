@@ -1,0 +1,21 @@
+<h1>Hash escaping behavior</h1>
+<div id=inloc></div>
+<div id=inhash></div>
+
+<script>
+if (location.hash == '') {
+  location.hash = 'æ';
+  setTimeout('location.reload()',100);
+} else {
+
+  if (location.href.indexOf('æ') == -1)
+    document.getElementById('inloc').innerHTML = 'URL hash value is escaped when examined via location.href';
+  else
+    document.getElementById('inloc').innerHTML = 'URL hash value is NOT ESCAPED when examined via location.href';
+
+  if (location.hash.indexOf('æ') == -1)
+    document.getElementById('inhash').innerHTML = 'URL hash value is escaped when examined via location.hash';
+  else
+    document.getElementById('inhash').innerHTML = 'URL hash value is NOT ESCAPED when examined via location.hash';
+}
+</script>

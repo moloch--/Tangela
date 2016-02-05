@@ -1,0 +1,154 @@
+<meta http-equiv="Content-Type" content="text/html;charset=iso-8859-2">
+
+<script src=".script_response?±">
+</script>
+
+<script src=".script_response2/±">
+</script>
+
+<script charset="iso-8859-2">
+
+function xml_path() {
+  var x;
+
+  if (window.XMLHttpRequest)
+    x = new XMLHttpRequest();
+  else
+    x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+
+  var res = '';
+
+  x.open('GET','.response_check2/\xC2\xB1',false);
+  x.send(null);
+
+  if (x.responseText.indexOf('%C4%85') != -1) res = 'page encoding used, output sent in UTF-8, <u>no escaping</u>'; else
+  if (x.responseText.indexOf('%25C4%2585') != -1) res = 'page encoding used, output sent in UTF-8, proper escaping'; else
+  if (x.responseText.indexOf('%B1') != -1) res = 'page encoding used, output sent in page encoding, <u>no escaping</u>'; else
+  if (x.responseText.indexOf('%25B1') != -1) res = 'page encoding used, output sent in page encoding, proper escaping'; else
+  if (x.responseText.indexOf('/a') != -1) res = 'page encoding used, output downgraded to US-ASCII'; else
+  if (x.responseText.indexOf('????') != -1) res = '<u>page encoding ignored</u>, string replaced with ? characters'; else
+  if (x.responseText.indexOf('??') != -1) res = 'page encoding used, string replaced with ? characters'; else
+    res = '<u>page encoding possibly ignored</u>, string mangled (' + x.responseText + ')';
+
+  document.getElementById('xml_path').innerHTML = res;
+
+}
+
+
+function xml_query() {
+  var x;
+
+  if (window.XMLHttpRequest)
+    x = new XMLHttpRequest();
+  else
+    x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+
+  var res = '';
+
+  x.open('GET','.response_check?\xC2\xB1',false);
+  x.send(null);
+
+  if (x.responseText.indexOf('%C4%85') != -1) res = 'page encoding used, output sent in UTF-8, <u>no escaping</u>'; else
+  if (x.responseText.indexOf('%25C4%2585') != -1) res = 'page encoding used, output sent in UTF-8, proper escaping'; else
+  if (x.responseText.indexOf('%B1') != -1) res = 'page encoding used, output sent in page encoding, <u>no escaping</u>'; else
+  if (x.responseText.indexOf('%25B1') != -1) res = 'page encoding used, output sent in page encoding, proper escaping'; else
+  if (x.responseText.indexOf('a') != -1) res = 'page encoding used, output downgraded to US-ASCII'; else
+  if (x.responseText.indexOf('????') != -1) res = '<u>page encoding ignored</u>, string replaced with ? characters'; else
+  if (x.responseText.indexOf('??') != -1) res = 'page encoding used, string replaced with ? characters'; else
+    res = '<u>page encoding possibly ignored</u>, string mangled (' + x.responseText + ')';
+
+  document.getElementById('xml_query').innerHTML = res;
+
+}
+
+
+function enc_path() {
+  var res = '';
+
+  if (script_response2.indexOf('%C4%85') != -1) res = 'page encoding used, output sent in UTF-8, <u>no escaping</u>'; else
+  if (script_response2.indexOf('%25C4%2585') != -1) res = 'page encoding used, output sent in UTF-8, proper escaping'; else
+  if (script_response2.indexOf('%B1') != -1) res = 'page encoding used, output sent in page encoding, <u>no escaping</u>'; else
+  if (script_response2.indexOf('%25B1') != -1) res = 'page encoding used, output sent in page encoding, proper escaping'; else
+  if (script_response2.indexOf('a') != -1) res = 'page encoding used, output downgraded to US-ASCII'; else
+  if (script_response2.indexOf('????') != -1) res = '<u>page encoding ignored</u>, string replaced with ? characters'; else
+  if (script_response2.indexOf('??') != -1) res = 'page encoding used, string replaced with ? characters'; else
+    res = '<u>page encoding possibly ignored</u>, string mangled (' + script_response2 + ')';
+
+  document.getElementById('enc_path').innerHTML = res;
+
+}
+
+
+function enc_query() {
+  var res = '';
+
+  if (script_response.indexOf('%C4%85') != -1) res = 'page encoding used, output sent in UTF-8, <u>no escaping</u>'; else
+  if (script_response.indexOf('%25C4%2585') != -1) res = 'page encoding used, output sent in UTF-8, proper escaping'; else
+  if (script_response.indexOf('%B1') != -1) res = 'page encoding used, output sent in page encoding, <u>no escaping</u>'; else
+  if (script_response.indexOf('%25B1') != -1) res = 'page encoding used, output sent in page encoding, proper escaping'; else
+  if (script_response.indexOf('a') != -1) res = 'page encoding used, output downgraded to US-ASCII'; else
+  if (script_response.indexOf('????') != -1) res = '<u>page encoding ignored</u>, string replaced with ? characters'; else
+  if (script_response.indexOf('??') != -1) res = 'page encoding used, string replaced with ? characters'; else
+    res = '<u>page encoding possibly ignored</u>, string mangled (' + script_response + ')';
+
+  document.getElementById('enc_query').innerHTML = res;
+
+}
+
+var loaded = false;
+
+function load_ok() {
+  loaded = true;
+}
+
+function test_idn() {
+  loaded = false;
+  document.getElementById('img_target').src = 'http://\xB1.coredump.cx/pics/logo1.gif';
+  setTimeout('check_img()',2000);
+}
+
+function check_img() {
+  if (!loaded) document.getElementById('idn').innerHTML = 'NOT SUPPORTED';
+    else document.getElementById('idn').innerHTML = 'supported';
+}
+
+
+function run_tests() {
+  xml_path();
+  xml_query();
+  enc_path();
+  enc_query();
+  test_idn();
+}
+
+</script>
+
+<h1>URL escaping behavior</h1>
+
+<b>Test #1:</b>
+Escaping behavior with XMLHttpRequest paths:
+<span style="color: blue" id=xml_path></span>
+<p>
+
+<b>Test #2:</b>
+Escaping behavior with XMLHttpRequest query strings:
+<span style="color: blue" id=xml_query></span>
+<p>
+
+<b>Test #3:</b>
+Escaping behavior with plain request paths:
+<span style="color: blue" id=enc_path></span>
+<p>
+
+<b>Test #4:</b>
+Escaping behavior with plain request queries:
+<span style="color: blue" id=enc_query></span>
+<p>
+
+
+<b>Test #5:</b>
+Non-Punycode IDN links: <span style="color: blue" id=idn></span>
+<img onload="load_ok()" height=1 width=1 id=img_target>
+<p>
+
+<input type=submit value="Start testing" onclick="run_tests()">

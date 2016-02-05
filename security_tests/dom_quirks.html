@@ -1,0 +1,97 @@
+<body onload="test_preced()">
+<h1>Various DOM implementation quirks</h1>
+
+<script>
+
+var r1, r2, r3, no_catch = true;
+
+try {
+
+  var navigator = 'om nom nom nom';
+
+} catch (e) {
+
+  try { delete navigator; } catch (e) { }
+
+  if (navigator.userAgent)
+    alert('builtin objects immune to: shadowing / overwrite, deletion');
+  else
+    alert('builtin objects immune to: shadowing / overwrite\n' +
+          'builtin objects vulnerable to: deletion');
+
+  no_catch = false;
+
+}
+
+if (no_catch) {
+
+  r1 = !!navigator.userAgent;
+
+  try { delete navigator; } catch (e) { }
+
+  r2 = !!navigator.userAgent;
+
+  /* If assigning to 'navigator' resulted in no .userAgent property,
+     and 'delete navigator' did not restore the .userAgent-bearing
+     original, assume successful overwrite. */
+
+  if (r1 == false && r2 == false) {
+
+    /* If new navigator got nuked, assume that deletion works. */
+
+    if (navigator)
+      alert('builtin objects immune to: deletion\n' + 
+            'builtin objects vulnerable to: overwrite');
+    else
+      alert('builtin objects vulnerable to: overwrite, deletion');
+
+  
+  } else {
+
+    try { delete navigator; } catch (e) { }
+
+    r3 = !!navigator.userAgent;
+
+    /* Ok, if assigning resulte din no .userAgent, but deletion
+       restored it, assume shadowing. */
+
+    if (r1 == false /* r2 == true */) {
+
+      if (r3 == true)
+        alert('builtin objects immune to: overwrite, deletion\n' + 
+              'builtin objects vulnerable to: shadowing');
+      else
+        alert('builtin objects immune to: overwrite\n' + 
+              'builtin objects vulnerable to: shadowing, deletion');
+
+    } else {
+
+      /* Action just apparently silently ignored. */
+
+      if (r3 == true)
+        alert('builtin objects immune to: overwrite / shadowing, deletion\n');
+      else
+        alert('builtin objects immune to: overwrite / shadowing\n' + 
+              'builtin objects vulnerable to: deletion');
+
+
+    }
+
+  }
+
+}
+
+function test_preced() {
+  document.getElementById('pout').innerHTML = document.getElementById('preced').innerHTML;
+}
+
+</script>
+  
+
+<li> <a href="javascript:alert(window===window.window)"> window === window.window?</a><p>
+<li> <a href="javascript:void(document.URL='javascript:alert(true)')">document.URL writeable?</a> (no action means no)<p>
+<li> <font color=teal><span id=pout></span></font>&nbsp;tag with duplicate ID takes precedence.
+<p>
+<span id=preced style="display: none">First</span>
+<span id=preced style="display: none">Last</span>
+

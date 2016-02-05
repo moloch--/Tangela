@@ -1,0 +1,301 @@
+<h1>DOM attack window</h1>
+
+<input type=submit value="Begin tests (victim window must be open)" onclick="begin_tests()">
+
+<p>
+<b>Results:</b>
+<ul id=out></ul>
+
+<script>
+
+function log(col,str) {
+  document.getElementById('out').innerHTML += '<li><font color=' + col + '>' + str + '</font>';
+}
+
+var vic_main = null;
+var vic_sub = null;
+var win_can_lookup = false;
+
+function begin_tests() {
+
+  var w;
+
+  try {
+    w = null;
+    try { w = window.open('','dom_victim'); } catch (e) { }
+    if (w && w.location.protocol == undefined) throw 1;
+    log('teal','window.open() cannot be used to get handles of third-party windows');
+    try { w.close(); } catch(e) { }
+  } catch (e) {
+    vic_main = w;
+    win_can_lookup = true;
+    log('red','window.open() CAN be used to get handles of third-party windows');
+  }
+
+  try {
+    w = null;
+    try { w = window.open('','dom_victim_sub'); } catch (e) { }
+    if (w && w.location.protocol == undefined) throw 1;
+    log('teal','window.open() cannot be used to directly get handles of third-party IFRAMEs');
+    try { w.close(); } catch(e) { }
+  } catch (e) {
+    vic_sub = w;
+    log('red','window.open() CAN be used to directly get handles of third-party IFRAMEs');
+  }
+
+  try {
+    w = frames ['dom_victim'];
+    if (!w) throw 1;
+    vic_main = w;
+    log('red','frames[] CAN be used to get handles of third-party windows');
+  } catch (e) {
+    log('teal','frames[] cannot be used to get handles of third-party windows');
+  }
+
+  try {
+    w = frames ['dom_victim_sub'];
+    if (!w) throw 1;
+    vic_sub = w;
+    log('red','frames[] CAN be used to directly get handles of third-party IFRAMEs');
+  } catch (e) {
+    log('teal','frames[] cannot be used to directly get handles of third-party IFRAMEs');
+  }
+
+  if (vic_main) {
+
+    try {
+      w = vic_main.frames['dom_victim_sub'];
+      if (!w) throw 1;
+      vic_sub = w;
+      log('red','(window handle).frames[] CAN be used to get handles of third-party IFRAMEs');
+    } catch (e) {
+      log('teal','(window handle).frames[] cannot be used to get handles of third-party IFRAMEs');
+    }
+
+    try {
+      var got_it = false;
+      for (i in vic_main.frames) { got_it = true; vic_sub = i; }
+      if (!got_it) throw 1;
+      log('red','(window handle).frames iterator CAN be used to get handles of third-party IFRAMEs');
+    } catch (e) {
+      log('teal','(window handle).frames iterator cannot be used to get handles of third-party IFRAMEs');
+    }
+
+    log('black','NOTE: Attempting disruptive tests next.');
+
+    try {
+      vic_main.history.forward(0);
+      log('red','(window handle).history.* CAN be used to navigate third-party windows');
+    } catch (e) {
+      log('teal','(window handle).history.* cannot be used to navigate third-party windows');
+    }      
+
+  } else {
+    log('gray','Failed to obtain any handles, so subframe tests not carried out');
+  }
+
+  begin_win();
+
+}
+
+var tmph;
+
+function begin_win() {
+
+  try {
+
+    if (!win_can_lookup) throw 1;
+
+    tmph = window.open('http://[SERVER_NAME]/[SERVER_PATH]/.dom_success.html','dom_victim');
+    setTimeout('finish_win()',2500);
+
+  } catch (e) {
+
+    log('teal','window.open() cannot be used to reposition third-party windows');
+    begin_loc_href();
+
+  }
+
+}
+
+function finish_win() {
+
+  try {
+
+    if (tmph.location.hostname != '[SERVER_NAME]') throw 1;
+    log('red','window.open() CAN be used to reposition third-party windows');
+
+    window.open('http://[SERVER_IP]/[SERVER_PATH]/.dom_victim.html','dom_victim');
+    setTimeout('begin_loc_href()',2500);
+
+  } catch (e) {
+
+    log('teal','window.open() cannot be used to reposition third-party windows');
+    begin_loc_href();
+
+  }
+
+}
+
+
+function begin_loc_href() {
+
+  try {
+
+    var exc = 0;
+
+    if (!vic_main) throw 1;
+
+    try { 
+      vic_main.location.href = 'http://[SERVER_NAME]/[SERVER_PATH]/.dom_success.html';
+    } catch (e) { exc++; }
+
+    try { 
+      vic_main.location = 'http://[SERVER_NAME]/[SERVER_PATH]/.dom_success.html';
+    } catch (e) { exc++; }
+
+    try { 
+      vic_main.document.URL = 'http://[SERVER_NAME]/[SERVER_PATH]/.dom_success.html';
+    } catch (e) { exc++; }
+
+    if (exc == 3) throw 1;
+
+    setTimeout('finish_loc_href()',2500);
+
+  } catch (e) {
+
+    log('teal','location / location.href / document.URL cannot be used to reposition third-party windows');
+    begin_loc_assign();
+
+  }
+
+}
+
+function finish_loc_href() {
+
+  try {
+
+    if (vic_main.location.hostname != '[SERVER_NAME]') throw 1;
+    log('red','location / location.href / document.URL CAN be used to reposition third-party windows');
+
+    try {
+      vic_main.location.href = 'http://[SERVER_IP]/[SERVER_PATH]/.dom_victim.html';
+    } catch (e) { }
+
+    try {
+      vic_main.location = 'http://[SERVER_IP]/[SERVER_PATH]/.dom_victim.html';
+    } catch (e) { }
+
+    try {
+      vic_main.document.URL = 'http://[SERVER_IP]/[SERVER_PATH]/.dom_victim.html';
+    } catch (e) { }
+
+    setTimeout('begin_loc_assign()',2500);
+
+  } catch (e) {
+
+    log('teal','location / location.href / document.URL cannot be used to reposition third-party windows');
+    begin_loc_assign();
+
+  }
+
+}
+
+
+function begin_loc_assign() {
+
+  try {
+
+    var exc = 0;
+
+    if (!vic_main) throw 1;
+
+    try { 
+      vic_main.location.assign('http://[SERVER_NAME]/[SERVER_PATH]/.dom_success.html');
+    } catch (e) { exc++; }
+
+    try { 
+      vic_main.location.replace('http://[SERVER_NAME]/[SERVER_PATH]/.dom_success.html');
+    } catch (e) { exc++; }
+
+    if (exc == 2) throw 1;
+
+    setTimeout('finish_loc_assign()',2500);
+
+  } catch (e) {
+
+    log('teal','location.assign() / location.replace() cannot be used to reposition third-party windows');
+    begin_doc();
+
+  }
+
+}
+
+function finish_loc_assign() {
+
+  try {
+
+    if (vic_main.location.hostname != '[SERVER_NAME]') throw 1;
+    log('red','location.assign() / location.replace() CAN be used to reposition third-party windows');
+
+    try {
+      vic_main.location.assign('http://[SERVER_IP]/[SERVER_PATH]/.dom_victim.html');
+    } catch (e) { }
+
+    try {
+      vic_main.location.replace('http://[SERVER_IP]/[SERVER_PATH]/.dom_victim.html');
+    } catch (e) { }
+
+    setTimeout('begin_doc()',2500);
+
+  } catch (e) {
+
+    log('teal','location.assign() / location.replace() cannot be used to reposition third-party windows');
+    begin_doc();
+
+  }
+
+}
+
+
+function begin_doc() {
+
+  try {
+    try { vic_main.document.open(); } catch (e) { }
+    vic_main.document.write('Victory!');
+    try { vic_main.document.close(); } catch (e) { }
+    setTimeout('finish_doc()',2500);
+  } catch (e) {
+    log('teal','document.write() cannot be used to rewrite third-party windows');
+    begin_finish();
+  }
+
+}
+
+
+function finish_doc() {
+  try {
+    if (vic_main.location.hostname != '[SERVER_NAME]') throw 1;
+    log('red','document.write() CAN be used to rewrite third-party windows');
+    /* Don't know how to undo. */
+    log('black','<b>IMPORTANT: In browsers where this check succeeded, please go back to the victim window and copy this URL into the URL bar before ' +
+        ' continuing:</b> <code>http://[SERVER_IP]/[SERVER_PATH]/.dom_victim.html</code>');
+    begin_finish();
+  } catch (e) {
+    log('teal','document.write() cannot be used to rewrite third-party windows');
+    begin_finish();
+  }
+}
+
+
+function begin_finish() {
+  log('green','Manual test 1: <a href="http://[SERVER_NAME]/[SERVER_PATH]/.dom_success.html" target="dom_victim_sub">click here</a> ' +
+              'then go to the victim window. If the IFRAME displayed there reads <code>Victory!</code>, it is possible to target IFRAMEs via ' + 
+              '<code>TARGET=</code> parameters on links. If nothing happens, or a new window is opened (please close), this is not possible.');
+
+  log('green','Manual test 2: <a href="http://[SERVER_NAME]/[SERVER_PATH]/.dom_success.html" target="dom_victim">click here</a> ' +
+              'then go to the victim window. If the whole window reads <code>Victory!</code>, it is possible to target third-party windows via ' + 
+              '<code>TARGET=</code> parameters on links. If nothing happens, or a new window is opened (please close), this is not possible.');
+}
+
+</script>

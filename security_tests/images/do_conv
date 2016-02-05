@@ -1,0 +1,35 @@
+#!/bin/bash
+
+INPUT=test.png
+
+FORMATS="png jpg gif tif bmp ico tga pnm pcx jp2"
+
+cat >../images.html <<_EOF_
+<h1>Image format tests</h1>
+<li> Supported image formats: <b><font color=teal><span id=sup></span></font></b><p>
+<li> Unsupported image formats: <b><font color=crimson><span id=unsup></span></font></b><p>
+<hr>
+<script>
+function supported(fmt) {
+  document.getElementById('sup').innerHTML += ' ' + fmt;
+}
+
+function not_supported(fmt) {
+  document.getElementById('unsup').innerHTML += ' ' + fmt;
+}
+</script>
+_EOF_
+
+for i in $FORMATS; do 
+
+  if [ ! "test.$i" = "$INPUT" ]; then
+    convert "$INPUT" "test.$i"
+  fi
+
+  chmod 644 "test.$i"
+
+  echo "<b>$i</b>: <IMG SRC=\"images/test.$i\" onload=\"supported('$i')\" onerror=\"not_supported('$i')\"><P>" >>../images.html
+
+done
+
+chmod 644 ../images.html

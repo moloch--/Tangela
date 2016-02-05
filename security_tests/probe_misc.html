@@ -1,0 +1,71 @@
+<h1>Miscellanous cross-domain information disclosure probes</h1>
+<style>
+a { color: blue; }
+a:visited { color: violet; }
+</style>
+<link rel=stylesheet href="http://{{ SERVER_IP }}/{{ SERVER_PATH }}/.probe_style.css">
+
+<script>
+var on2xx = 'none';
+var on3xx = 'none';
+var on4xx = 'none';
+var on5xx = 'none';
+
+function getcss(_elem, _style) {
+
+  var computedStyle;
+  var e = document.getElementById(_elem);
+
+  if (typeof e.currentStyle != 'undefined') computedStyle = e.currentStyle;
+  else computedStyle = document.defaultView.getComputedStyle(e, null);
+
+  return computedStyle[_style];
+
+}
+
+function log(col,str) {
+  document.getElementById('out').innerHTML += '<li><font color=' + col +'>' + str + '</font>';
+}
+
+function begin_tests() {
+
+  if (getcss('l_v','color') != getcss('l_nv','color'))
+    log('red','CSS :visited probe possible');
+  else
+    log('teal','CSS :visited probe not possible');
+
+  if (getcss('timg','height') == '85px')
+    log('red','CSS image size probe possible');
+  else
+    log('teal','CSS image size probe not possible: ' + getcss('timg','height'));
+
+  if (getcss('ctest','height') == '10px')
+    log('red','CSS-as-HTML trickery possible');
+  else
+    log('teal','CSS-as-HTML trickery not possible: ' + getcss('ctest','height'));
+
+  log('black','Events firing on images with 2xx HTTP codes: ' + on2xx);
+  log('black','Events firing on images with 3xx HTTP codes: ' + on3xx);
+  log('black','Events firing on images with 4xx HTTP codes: ' + on4xx);
+  log('black','Events firing on images with 5xx HTTP codes: ' + on5xx);
+
+}
+</script>
+
+<div id=ctest class=bar></div>
+
+<b>Please wait until this page loads fully</b>, then:<br>
+<a href="http://www.example.com/" target="_blank" onclick="setTimeout('begin_tests()',2000)">click on this link to continue</a> (you can close the window and come back here later on)
+
+<a href="http://www.example.com/" id=l_v></a>
+<a href="http://www.badbadbad918201.florg19.com/" id=l_nv></a>
+
+<p>
+<b>Results:</b>
+<ul id=out></ul>
+<p>
+<img src="http://{{ SERVER_IP }}/{{ SERVER_PATH }}/.test_img.jpg" id=timg>
+<img src="http://{{ SERVER_IP }}/{{ SERVER_PATH }}/.return_code_img.php?200" onerror="on2xx = 'onerror'" onload="on2xx = 'onload'" height=1 width=1>
+<img src="http://{{ SERVER_IP }}/{{ SERVER_PATH }}/.return_code?302" onerror="on3xx = 'onerror'" onload="on3xx = 'onload'" height=1 width=1>
+<img src="http://{{ SERVER_IP }}/{{ SERVER_PATH }}/.return_code?403" onerror="on4xx = 'onerror'" onload="on4xx = 'onload'" height=1 width=1>
+<img src="http://{{ SERVER_IP }}/{{ SERVER_PATH }}/.return_code?500" onerror="on5xx = 'onerror'" onload="on5xx = 'onload'" height=1 width=1>

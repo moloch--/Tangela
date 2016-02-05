@@ -1,0 +1,32 @@
+<title>ACCESS OK</title>
+<h1>Miscellanous Java applet checks</h1>
+<script>
+document.cookie = 'JAVA_COOKIE_TEST=1;path=/;domain=[SERVER_NAME]';
+</script>
+
+TEST 1: If this applet reads 'ACCESS OK', <code>DOMService</code> may be used for scripts to access <font color=crimson>cross-domain</font> documents:<br>
+<applet codebase="http://[SERVER_IP]/[SERVER_PATH]/java/" code="TitleTester.class" height=100 width=600>
+</applet>
+<p>
+TEST 2: If this applet reads 'ACCESS OK', <code>DOMService</code> may be used for scripts to access <font color=teal>same-domain</font> documents:<br>
+<applet code="TitleTester.class" height=100 width=600>
+</applet>
+<p>
+TEST 3: If this applet reads 'Browser stack used', <code>URLConnection</code> uses browser stack:<br>
+<applet code="ConnTester.class" height=100 width=600>
+</applet>
+<p>
+TEST 4: This applet simply lists all headers that Java applets may set in HTTP traffic:<br>
+<applet code="HeaderTester.class" height=130 width=2000>
+</applet>
+<p>
+
+TEST 5: Checks if Java can read back httponly cookies:<br>
+<applet code="HttpOnlyTester.class" height=100 width=600>
+</applet>
+<p>
+
+TEST 6: Checks if Java can see 302 redirect bodies:<br>
+<applet code="RedirTester.class" height=100 width=600>
+</applet>
+<p>

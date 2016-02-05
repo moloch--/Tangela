@@ -1,0 +1,19 @@
+<meta http-equiv="Content-Type" value="text/html; charset=utf-8">
+<h1>UTF-8 behavior test</h1>
+
+<li>TEST 1: À¼font color=redÀ¾ If this is shown in red, overlong utf-8 is permitted. À¼/fontÀ¾<p>
+
+<li> TEST 2: If this text reads "?12345678", two-byte utf-8 overconsumption is possible: <code>À012345678</code><p>
+
+<li> TEST 3: If this text reads "?2345678", three-byte utf-8 overconsumption is possible: <code>à012345678</code><p>
+
+<li> TEST 4: If this text reads "?345678", four-byte utf-8 overconsumption is possible: <code>ð012345678</code><p>
+
+<li> TEST 5: If this text reads "?45678", five-byte utf-8 overconsumption is possible: <code>ø012345678</code><p>
+
+<li> TEST 6: If this text reads "?5678", six-byte utf-8 overconsumption is possible: <code>ü012345678</code><p>
+
+
+
+
+

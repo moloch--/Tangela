@@ -1,0 +1,79 @@
+<h1>Assorted DOM exceptions (frame-based tests)</h1>
+
+<input type=submit onclick="begin_tests()" value="Start tests">
+<p>
+
+<iframe id=foo name=foo src="http://[SERVER_IP]/[SERVER_PATH]/.dom_frame.html" width=70% height=30%>
+</iframe>
+<p>
+<ul id=out></ul>
+
+<script>
+function test_funct_call2() {
+}
+
+function begin_tests() {
+  var dext = null;
+  var dnext = null;
+
+  try {
+    delete frames['foo'].private_var;
+  } catch (e) { dext = e.toString() + " " + e.description /* MSIE */; }
+
+  try {
+    delete frames['foo'].private_var_nonexist;
+  } catch (e) { dnext = e.toString() + " " + e.description /* MSIE */; }
+  
+
+  if (dext == dnext)
+    document.getElementById('out').innerHTML += '<li> delete probe not possible.';
+  else
+    document.getElementById('out').innerHTML += '<li> delete probe POSSIBLE.';
+
+  try {
+    document.getElementById('foo').elem_func = function() { }
+  } catch (e) {
+  }
+
+  try { 
+    frames['foo'].opener = 'SUCCESS'; 
+  } catch (e) { }
+
+  try { 
+    frames['foo'].test_funct_call(); 
+    document.getElementById('out').innerHTML += '<li> Calling functions across domain (parent &rarr; child) POSSIBLE.';
+  } catch (e) { 
+    document.getElementById('out').innerHTML += '<li> Calling functions across domain (parent &rarr; child) not possible.';
+  }
+
+  try { 
+    test_funct_set2(); 
+    document.getElementById('out').innerHTML += '<li> Setting functions across domain (child &rarr; parent) POSSIBLE.';
+  } catch (e) { 
+    document.getElementById('out').innerHTML += '<li> Setting functions across domain (child &rarr; parent) not possible.';
+  }
+
+  try { 
+    frames['foo'].test_funct_set = function () { }
+  } catch (e) { 
+  }
+
+  try { 
+    frames['foo'].onfocus = 'SUCCESS';
+    if (frames['foo'].onfocus != 'SUCCESS') throw 1;
+    document.getElementById('out').innerHTML += '<li> Setting (frame).onfocus SUCCESSFUL.';
+  } catch (e) { 
+    document.getElementById('out').innerHTML += '<li> Setting (frame).onfocus not possible.';
+  }
+
+  try { 
+    frames['foo'].name = 'SUCCESS'; 
+  } catch (e) { }
+
+  if (window.postMessage)
+    document.getElementById('out').innerHTML += '<li> window.postMessage SUPPORTED.';
+  else
+    document.getElementById('out').innerHTML += '<li> window.postMessage not supported.';
+
+}
+</script>

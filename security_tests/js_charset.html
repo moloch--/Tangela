@@ -1,0 +1,10 @@
+<html>
+<meta http-equiv="Content-Type" value="text/html; charset=utf8">
+Does the Javascript pop-up look like this:
+<p>
+<img src="http://www.oasis-open.org/docbook/xmlcharent/glyphs/100dpi/U0105.png">
+<p>
+...if yes, then <code>charset=</code> parameter is honored on <code>SCRIPT</code> tags. Otherwise, it probably isn't.
+<p>
+<script src="http://[SERVER_IP]/[SERVER_PATH]/.charset_test.js" charset="iso8859-2">
+</script>

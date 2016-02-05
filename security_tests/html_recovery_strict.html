@@ -1,0 +1,21 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+            "http://www.w3.org/TR/html4/strict.dtd">
+<h1>Static HTML recovery mode tests (HTML 4.01 strict)</h1>
+
+(1) The following 'TEST' in this line should be not seen unless non-HTML <code>&lt;!FOO...</code> parsing is in effect:
+<!unrecognized foo="-->TEST">
+<p>
+(2) The following 'TEST' in this line should be shown in BLUE if <code>&lt;FOO &lt;...</code> recovery took place (red or black if not): <FONT COLOR=RED <FONT COLOR=BLUE>TEST</FONT>>
+<p>
+(3) This full line should be shown in RED only if <code>&lt;FOO &lt;...</code> recovery is nested (black if not).
+</font>
+<p>
+(4) The following 'TEST' in this line should be shown in BLUE if <code>&lt;FOO="&lt;...</code> recovery took place: <FONT="<FONT COLOR=BLUE>TEST</FONT>" COLOR=RED>
+<p>
+(5) This full line should be shown in RED only if <code>&lt;FOO="&lt;...</code> recovery is nested (black if not).
+</font>
+<p>
+(6) The following 'TEST' in this line should be shown only if SGML comment parsing is on (nothing should be seen if not):
+<!-- Hello -- world > TEST -->
+<p>
+(7) The following 'TEST' in this line should be shown in red only if closure recovery took place: <font color="red>TEST

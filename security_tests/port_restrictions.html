@@ -1,0 +1,47 @@
+<h1>Port restrictions test (non-Firefox)</h1>
+<u>IMPORTANT: Please be sure you are NOT going through a proxy.</u>
+<p>
+<font color=red>This version of the test works only with non-Firefox browsers.</font>
+<a href="port_restrictions_ff.html">Click here</a> for a Firefox variant.
+
+<p>
+This will take a longer while and will send a lot of connection attempts to 
+39.3.1.9 (which currently is just a reserved IANA blakchole, but who knows).
+<p>
+<input type=submit value="Start testing" onclick="next_port()">
+<p>
+<b>Blocked ports:</b> <span id=out></span>
+<p>
+<script>
+
+var cport = 0;
+
+function next_port() {
+  cport++;
+
+  if (cport == 65536) {
+    document.getElementById('pno').innerHTML = 'ALL DONE';
+    return; 
+  }
+
+  document.getElementById('pno').innerHTML = cport;
+
+  document.getElementById('sandbox').innerHTML =
+    '<img src="http://39.3.1.9:' + cport + '/" onerror="bad_port(' + cport + ')" onload="bad_port(' + cport + ')">';
+
+  setTimeout('next_port()',50);
+
+}
+
+
+function bad_port(p) {
+  if (p != cport) return;
+  document.getElementById('out').innerHTML += ' ' + p;
+}
+</script>
+
+Now testing port: <span id=pno></span>
+
+<div id=sandbox>
+</div>
+

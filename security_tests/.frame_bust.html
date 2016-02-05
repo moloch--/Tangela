@@ -1,0 +1,4 @@
+<input type=submit value="Click here to bust frame" onclick="try { if (top.location.href != 'bork') throw 1; } catch (e) { top.location.href = 'http://www.example.com/' } ">
+<p>
+Successful top-level navigation to <code>www.example.com</code> means 
+that setter interception did not work.

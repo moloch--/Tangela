@@ -1,0 +1,16 @@
+<meta http-equiv="Content-Type" value="text/html; charset=utf-7">
+
+<h1>UTF-7 behavior test</h1>
+
+<li>TEST 0: +ADw-font color=red+AD4- If this is not shown in red, (overlong) UTF-7 is not supported.</font>
+
+<p>
+
+<li>TEST 1: If UTF-7 is detected in this IFRAME, but wasn't detected in standalone tests, UTF-7 is inherited across domains:<br>
+<iframe src="http://[SERVER_IP]/[SERVER_PATH]/.chr_utf7.html"></iframe>
+<p>
+
+
+<li>TEST 2: If this looks like a copyright sign, high-bit values are treated like <code>iso-8859-1</code>; if it looks like a closing
+bracket - <code>)</code>, high bit is stripped; if it looks like a missing character symbol ("?"), invalid codes are rejected; if it looks
+yet different, something might be broken: ©

@@ -1,0 +1,62 @@
+<h1>Getter functionality tests</h1>
+
+<div id=out>
+</div>
+
+<span id=sandbox></span>
+
+<script>
+
+/* Builtin objects with meaningful getters */
+var objects = [
+  'Array',
+  'String',
+  'Date',
+  'Boolean',
+  'Number',
+  'Function',
+  'Date',
+  'Error',
+  'XML',
+  'RegExp',
+  'Object'
+];
+
+var out = document.getElementById('out');
+var setter_ok;
+
+for (i in objects) {
+  var x;
+  var oi = objects[i];
+
+  if (oi == '0') continue;
+
+  try { 
+    x = eval(oi + '.prototype.__defineGetter__');
+    if (x == undefined || x == '' || x == null) throw 1;
+  } catch (e) { 
+    out.innerHTML += '<li><font color=teal>' + oi + '</font> has no prototype or does not support getters.<p>'    
+    continue;
+  }
+
+  setter_ok = false;
+
+  try {
+    eval(oi + '.prototype.__defineGetter__("bar",function () { setter_ok = true; return 0; })')
+  } catch (e) {
+    out.innerHTML += '<li><font color=teal>' + oi + '</font> does not permit custom prototype getters.<p>'    
+    continue;
+  }
+
+  try {
+    eval('var foo = new ' + oi + '; var baz = foo.bar;');
+    if (!setter_ok) throw 1;
+    out.innerHTML += '<li><font color=teal>' + oi + '</font> custom prototype getter WORKED.<p>'    
+  } catch (e) {
+    out.innerHTML += '<li><font color=teal>' + oi + '</font> custom prototype getter not invoked.<p>'    
+    continue;
+  }
+
+}
+
+</script>

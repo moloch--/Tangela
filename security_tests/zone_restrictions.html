@@ -1,0 +1,14 @@
+<h1>Domain / IP zoning checks</h1>
+This test again requires some manual work:<p>
+<ul>
+<li><a href="http://www.example.com/" target="_blank">Click here</a> to open www.example.com in a new window.
+<p>
+<li>TEST 1: Paste <code>javascript:location='http://[SERVER_IP_INTERNAL]/'</code> in the URL bar there. If you are taken to [SERVER_NAME_INTERNAL], navigation to RFC 1918 addresses
+is not restricted. If nothing happens or an error page comes up, it is.
+<p>
+<li>TEST 2: Go back to www.example.com, and try again with this URL text: <code>javascript:location='http://[SERVER_NAME_NON_FQDN]/'</code>. If you are taken to [SERVER_NAME], navigation
+to non-FQDN host names is not restricted. If nothing happens or an error page comes up, it is.
+<p>
+<li>TEST 3: Go back to www.example.com, and try again with this URL: <code>javascript:location='http://[SERVER_NAME_INTERNAL]/'</code>. If you
+are taken to [SERVER_NAME_INTERNAL], navigation to host names that resolve to RFC 1918 addresses is not restricted. Otherwise, it is.
+</ul>

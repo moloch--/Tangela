@@ -1,0 +1,35 @@
+<body onload="run_tests()">
+<h1>Cookie tests, part 2</h1>
+<style>
+pre {
+  font-size: 70%;
+  font-family: Bitstream Vera Sans Mono,Andale Mono,Lucida Console;
+  border: 1px solid teal;
+}
+</style>
+<script>
+if (location.hostname != '[SERVER_IP]') location.hostname = '[SERVER_IP]';
+
+function run_tests() {
+  document.cookie = 'testcookie=non_clobber; domain=[SERVER_IP_ONE_SEGMENT_LESS];path=/';
+  document.cookie = 'testcookie=x';
+  if (document.cookie.indexOf('non_clobber') != -1)
+    alert('Cookies for IP fragments SUPPORTED - oops!');
+  else
+    alert('Cookies for IP fragments not supported, as expected.');
+
+}
+</script>
+<p>
+<h3>Manual tests:</h3>
+ccTLD behavior #1: visit <a href="http://www.pkp.com.pl/" target="_blank">pkp.com.pl</a>, then copy-and-past this into the URL bar:<br>
+    <pre>javascript:document.cookie='test1=noclobber;domain=.com.pl';document.cookie='test1=x';if(document.cookie.indexOf('noclobber')!=-1)alert('FAIL');else/**/alert('OK')</pre>
+If 'FAIL' is displayed, cookie setting for <code>.com.pl</codE> is possible (bad).<p>
+
+ccTLD behavior #2: visit <a href="http://www.ztm.waw.pl/" target="_blank">ztm.waw.pl</a>, then copy-and-past this into the URL bar:<br>
+    <pre>javascript:document.cookie='test1=noclobber;domain=.waw.pl';document.cookie='test1=x';if(document.cookie.indexOf('noclobber')!=-1)alert('FAIL');else/**/alert('OK')</pre>
+If 'FAIL' is displayed, cookie setting for <code>.waw.pl</codE> is possible (bad).<p>
+ccTLD behavior #3: visit <a href="http://www.coredump.cx/" target="_blank">www.coredump.cx</a>, then copy-and-past this into the URL bar:<br>
+    <pre>javascript:document.cookie='test1=noclobber;domain=.coredump.cx';document.cookie='test1=x';if(document.cookie.indexOf('noclobber')==-1)alert('FAIL');else/**/alert('OK')</pre>
+If 'FAIL' is displayed, cookie setting for <code>.coredump.cx</codE> is denied (sloppy).<p>
+

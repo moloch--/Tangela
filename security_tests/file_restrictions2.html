@@ -1,0 +1,74 @@
+<body onload="setTimeout('finalize_tests()',500)">
+<link rel=stylesheet href="file:///c:/file_restrictions/style_test.css">
+<link rel=stylesheet href="file:///file_restrictions/style_test.css">
+
+<h1>file:/// access restriction tests (continued)</h1>
+
+<ul id=out>
+
+<li> If a photo is displayed, IMG-based file:/// inclusion is possible:
+<img src="file:///c:/file_restrictions/image_test.jpg">
+<img src="file:///file_restrictions/image_test.jpg">
+<p>
+
+
+<li> If this reads 'HELLO WORLD', APPLET-based file:/// inclusion is possible:
+<applet codebase="file:///c:/file_restrictions/" code="java_test.class"></applet>
+<applet codebase="file:///file_restrictions/" code="java_test.class"></applet>
+<p>
+
+<li> If this reads 'HELLO WORLD', IFRAME-based file:/// navigation is possible:
+<iframe src="file:///c:/file_restrictions/html_test.html" height=200 width=200></iframe>
+<iframe src="file:///file_restrictions/html_test.html" height=200 width=200></iframe>
+
+<p>
+
+</ul>
+
+<div id=test class="test"></div>
+
+<script>
+var script_works = false;
+</script>
+
+<script src="file:///c:/file_restrictions/script_test.js"></script>
+<script src="file:///file_restrictions/script_test.js"></script>
+
+<script>
+function getcss(_elem, _style) {
+
+  var computedStyle;
+  var e = document.getElementById(_elem);
+
+  if (typeof e.currentStyle != 'undefined') computedStyle = e.currentStyle;
+  else computedStyle = document.defaultView.getComputedStyle(e, null);
+
+  return computedStyle[_style];
+
+}
+
+function finalize_tests() {
+
+    document.getElementById('out').innerHTML +=
+'<li> If this reads \'HELLO WORLD\', EMBED-based file:/// inclusion is possible:' +
+'<embed src="file:///c:/file_restrictions/flash_test.swf" type="application/x-shockwave-flash"></embed>' +
+'<embed src="file:///file_restrictions/flash_test.swf" type="application/x-shockwave-flash"></embed>' +
+'<p>';
+
+  if (script_works)
+    document.getElementById('out').innerHTML +=
+      '<li> SCRIPT-based file:/// inclusion is POSSIBLE.<p>';
+  else
+    document.getElementById('out').innerHTML +=
+      '<li> SCRIPT-based file:/// inclusion is not possible.<p>';
+
+  if (getcss('test','height') == '10px')
+    document.getElementById('out').innerHTML +=
+      '<li> STYLE-based file:/// inclusion is POSSIBLE.<p>';
+  else
+    document.getElementById('out').innerHTML +=
+      '<li> STYLE-based file:/// inclusion is not possible: ' + getcss('test','height') + '<p>';
+
+}
+
+</script>

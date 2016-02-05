@@ -1,0 +1,85 @@
+<html>
+<h1>EMBED sniffing precedence checks</h1>
+
+<b>Interpreting results:</b>
+
+<ul>
+
+<li>If test #1 and #2 succeeded, put <code>TYPE=</code> values as the top priority on the list. If #1 succeeded, but #2 not, put content sniffing as 
+top priority on the list. If both #1 and #2 failed, it seems that <code>Content-Type</code> should be put as top priority (odd).
+<p>
+
+<li>If test #3 succeeded, <code>Content-Type</code> should go next on the list. If #3 failed, but #4 succeeded, it should be put at the very bottom.
+If both #3 and #4 failed, it is not on the list at all.
+<p>
+
+<li>If test #5 and #6 both failed, content sniffing should not go on the list at all. Otherwise, if any succeeded, it should be put as the next item
+on the list, as governed by the previous step of this algorithm.
+
+</ul>
+
+<p>
+
+
+SANITY CHECK: If this <code>EMBED</code> reads "hello world", you have Flash installed; otherwise, this test is meaningless:
+<br>
+<div style="border: 1px solid teal; width: 400px; height: 80px; padding: 1px">
+<embed src=".try_valid_swf.php?application/x-shockwave-flash" type="application/x-shockwave-flash" height=80 width=400></embed>
+</div>
+
+<p>
+
+TEST 1: If this <code>EMBED</code> reads "hello world", valid <code>TYPE=</code> parameter takes precedence over <code>Content-Type</code>:
+<br>
+<div style="border: 1px solid teal; width: 400px; height: 80px; padding: 1px">
+<embed src=".try_valid_swf.php?text/html" type="application/x-shockwave-flash" height=80 width=400></embed>
+</div>
+
+<p>
+
+TEST 2: If right-clicking on this <code>EMBED</code> opens Flash menu ("About Flash Player", as opposed to a "broken plugin" icon or
+somesuch), valid <code>TYPE=</code> parameter takes precedence over <code>Content-Type</code> <u>and</u> content sniffing:
+<br>
+<div style="border: 1px solid teal; width: 400px; height: 80px; padding: 1px">
+<embed src=".try_invalid_swf.php?text/html" type="application/x-shockwave-flash" height=80 width=400></embed>
+</div>
+
+<p>
+
+TEST 3: If right-clicking on this <code>EMBED</code> opens Flash menu ("About Flash Player"), <code>Content-Type</code> is taken into account, 
+takes precedence over unknown <code>TYPE=</code> values:
+<br>
+<div style="border: 1px solid teal; width: 400px; height: 80px; padding: 1px">
+<embed src=".try_invalid_swf.php?application/x-shockwave-flash" type="unrecognized/foo" height=80 width=400></embed>
+</div>
+
+<p>
+
+TEST 4: If right-clicking on this <code>EMBED</code> opens Flash menu ("About Flash Player"), 
+<code>Content-Type</code> is taken into account, takes precedence over missing
+<code>TYPE=</code> values:
+<br>
+<div style="border: 1px solid teal; width: 400px; height: 80px; padding: 1px">
+<embed src=".try_invalid_swf.php?application/x-shockwave-flash" height=80 width=400></embed>
+</div>
+
+<p>
+
+TEST 5: If this <code>EMBED</code> reads "hello world" or triggers a <code>test5_download</code> download prompt, 
+content sniffing takes place if <code>Content-Type</code> and <code>TYPE=</code> are 
+not recognized:
+<br>
+<div style="border: 1px solid teal; width: 400px; height: 80px; padding: 1px">
+<embed src=".try_valid_swf.php/test5_download?unrecognized/bar" type="unrecognized/foo" height=80 width=400></embed>
+</div>
+
+<p>
+
+TEST 6: If this <code>EMBED</code> reads "hello world" or triggers a <code>test6_download</code> download 
+, content sniffing takes place if <code>Content-Type</code> and <code>TYPE=</code> are
+missing:
+<br>
+<div style="border: 1px solid teal; width: 400px; height: 80px; padding: 1px">
+<embed src=".try_valid_swf.php/test6_download?" height=80 width=400></embed>
+</div>
+<p>

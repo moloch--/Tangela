@@ -1,0 +1,73 @@
+{% extends main.html %}
+
+{% block title %}Home{% end %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-2">
+        <img src="/static/images/tangela-md.png" alt="Browser Security &amp; Crash Tests"/>
+    </div>
+    <div class="col-md-10">
+        <h1>
+            Tangela<br />
+            <small>Browser Security &amp; Crash Tests</small>
+        </h1>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <h3>
+            <i class="fa fa-fw fa-unlock-alt"></i>
+            Security Tests
+        </h3>
+        <table id="security_tests" class="table table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Test Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, test in enumerate(security_tests) %}
+                    <tr>
+                        <td><strong>{{ index + 1 }}</strong></td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" type="button" href="/security_tests/{{ test }}" target="_blank">
+                                {{ test.replace('.html', '').replace('_', ' ').title() }}
+                                <i class="fa fa-fw fa-external-link"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% end %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <h3>
+            <i class="fa fa-fw fa-bug"></i>
+            Crash Tests
+        </h3>
+        <table id="crash_tests" class="table table-striped table-responsive">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Test Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, test in enumerate(crash_tests) %}
+                    <tr>
+                        <td><strong>{{ index + 1 }}</strong></td>
+                        <td>
+                            <a class="btn btn-primary btn-sm" type="button" href="/crash_tests/{{ test }}" target="_blank">
+                                {{ test.replace('.html', '').replace('_', ' ').title() }}
+                                <i class="fa fa-fw fa-external-link"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% end %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% end %}

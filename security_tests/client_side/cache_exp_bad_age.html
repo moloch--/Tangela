@@ -1,0 +1,16 @@
+<h1>Invalid max-age test</h1>
+<u>WARNING: These tests are only meaningful if no proxy is configured, and if miniserver with an appropriate script is running on your
+computer.</u>
+<p>
+
+<script src="http://127.0.0.1:1234/dummy_test4.js"></script>
+<script>
+  if (!window.script_time) alert('Something went wrong. Is miniserver running?');
+  var script_time_old = script_time;
+</script>
+
+<script src="http://127.0.0.1:1234/dummy_test4.js"></script>
+<script>
+  if (script_time_old == script_time) alert('Invalid max-date does NOT stop caching');
+    else alert('Invalid max-date STOPS caching');
+</script>

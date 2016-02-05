@@ -1,0 +1,258 @@
+<body onbeforeunload="return false">
+<h1>
+Browser-recognized, externally accepted URL schemes
+</h1>
+<i>
+Note: this test may be disruptive. MSIE in particular may flood you with tons of stupid
+pop-up prompts. Click 'cancel', close any applications launched, rinse, repeat. Firefox
+will also verbosely inform you about unsupported protocols. Take note of prompts to run
+external programs, though.
+</i>
+<p>
+
+<script>
+var protolist = [
+  'FirefoxURL',
+  'aaa',
+  'aaas',
+  'about',
+  'acap',
+  'acrobat',
+  'afs',
+  'aim',
+  'auth',
+  'auth-int',
+  'aw',
+  'callto',
+  'cap',
+  'cdl',
+  'chrome',
+  'chrome-resource',
+  'chromewebdata',
+  'cid',
+  'crid',
+  'cvs',
+  'daap',
+  'data',
+  'dav',
+  'dict',
+  'dns',
+  'dtn',
+  'ed2k',
+  'error',
+  'fax',
+  'feed',
+  'file',
+  'finger',
+  'fish',
+  'fpfind',
+  'ftp',
+  'gg',
+  'gizmoproject',
+  'go',
+  'gopher',
+  'h323',
+  'hcp',
+  'help',
+  'http',
+  'https',
+  'iax',
+  'iax2',
+  'icap',
+  'im',
+  'imap',
+  'info',
+  'internetsearch',
+  'ipp',
+  'irc',
+  'ircs',
+  'iris',
+  'itms',
+  'itmss',
+  'itpc',
+  'its',
+  'jar',
+  'javascript',
+  'keyparc',
+  'lasftm',
+  'ldap',
+  'ldaps',
+  'livescript',
+  'local',
+  'magnet',
+  'mailbox',
+  'mailserver',
+  'mailto',
+  'mhtml',
+  'mid',
+  'mk',
+  'mms',
+  'mmst',
+  'mmsu',
+  'mocha',
+  'modem',
+  'moz-icon',
+  'ms-help',
+  'ms-its',
+  'ms-itss',
+  'msbd',
+  'msdaipp',
+  'msnim',
+  'mso-offdap',
+  'msrp',
+  'mtqp',
+  'mupdate',
+  'mvn',
+  'news',
+  'nfs',
+  'nntp',
+  'notes',
+  'opaquelocktoken',
+  'outlook',
+  'pcast',
+  'pop',
+  'pres',
+  'prospero',
+  'psyc',
+  'rdf',
+  'res',
+  'resource',
+  'rlogin',
+  'rmi',
+  'rsync',
+  'rtsp',
+  'script',
+  'secondlife',
+  'service',
+  'sftp',
+  'sgn',
+  'shell',
+  'shttp',
+  'sip',
+  'sips',
+  'skype',
+  'smb',
+  'sms',
+  'snews',
+  'snmp',
+  'soap.beep',
+  'soldat',
+  'ssh',
+  'steam',
+  'stssync',
+  'svn',
+  'sysimage',
+  'tag',
+  'teamspeak',
+  'tel',
+  'telnet',
+  'tftp',
+  'thismessage',
+  'tip',
+  'tn3270',
+  'tv',
+  'unreal',
+  'urn',
+  'vbscript',
+  'vemmi',
+  'ventrilo',
+  'view-cache',
+  'view-source',
+  'wais',
+  'webcal',
+  'wia',
+  'wyciwyg',
+  'xfire',
+  'xmlrpc.beep',
+  'xmpp',
+  'xri',
+  'ymsgr'
+];
+
+var curpos = 0;
+var curtime = 0;
+
+var load_delay = '';
+var load_instant = '';
+var load_err_delay = '';
+var load_err_instant = '';
+var load_never = '';
+var load_except = '';
+
+var it;
+var advance = false;
+
+function got_error_evt() {
+  if (curtime < 2) load_err_instant = load_err_instant + " " + protolist[curpos - 1];
+    else load_err_delay = load_err_delay + " " + protolist[curpos - 1];
+  advance = true;
+}
+
+function got_load_evt() {
+  if (curtime < 2) load_instant = load_instant + " " + protolist[curpos - 1];
+    else load_delay = load_delay + " " + protolist[curpos - 1];
+  advance = true;
+}
+
+function got_except() {
+  load_except = load_except + " " + protolist[curpos - 1];
+  advance = true;
+}
+
+
+function handle_next() {
+  curtime = 0;
+  curpos++;
+  if (curpos > protolist.length) finalize();
+  else {
+    document.getElementById('but').value = 'Now testing ' + protolist[curpos - 1] + '...';
+    try {
+      document.getElementById('testimg').src = protolist[curpos - 1] + '://' + document.getElementById('host').value + ':9999/foo';
+    } catch (e) { got_except(); }
+  }
+}
+
+function finalize() {
+  clearInterval(it);
+  document.getElementById('but').value = 'Testing done.';
+  document.getElementById('output').innerHTML = '<p><b>Delayed "success":</b> ' + load_delay + 
+                                                '<p><b>Instant "success":</b> ' + load_instant +
+                                                '<p><b>Delayed failure:</b> ' + load_err_delay + 
+                                                '<p><b>Instant failure:</b> ' + load_err_instant + 
+                                                '<p><b>No event:</b> ' + load_never + 
+                                                '<p><b>Exception:</b> ' + load_except;
+}
+
+
+function clock_tick() {
+
+  if (advance) {
+    advance = false;
+    handle_next();
+    return;
+  }
+
+  curtime++;
+  if (curtime > 100) {
+    load_never = load_never + " " + protolist[curpos - 1];
+    handle_next();
+  }
+}
+
+function start_stuff() {
+  it = setInterval('clock_tick()',10);
+  handle_next();
+  document.getElementById('but').disabled = true;
+}
+
+</script>
+
+Name a host close to you that has port 9999/tcp not firewalled: <input type=text id=host value="[SERVER_NAME]">
+<p>
+
+<iframe onload="got_load_evt()" onerror="got_error_evt()" id=testimg height=32 width=32></iframe>
+<p>
+<input type=submit onclick="start_stuff()" value="Begin testing" id=but>
+<p>
+<div id=output>
+</div>

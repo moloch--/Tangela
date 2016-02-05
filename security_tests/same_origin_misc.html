@@ -1,0 +1,181 @@
+<h1>DOM, XMLHttpRequest, cookie same-origin policy checks</h1>
+
+<b>Test variants:</b>
+<li><a href="http://[SERVER_NAME]/[SERVER_PATH]/same_origin_misc.html">Version served in *.com domain</a>
+<li><a href="http://[SERVER_IP]/[SERVER_PATH]/same_origin_misc.html">Version served from IP address</a>
+<p>
+
+TEST 1: <code>document.domain</code> can be set to first segment of the name (only meaningful for IP-based tests)? <span style="color: teal" id=out1></span>
+<br>
+TEST 2: <code>document.domain</code> can be set to last segment of the name? <span style="color: teal" id=out2></span>
+<br>
+TEST 3: XMLHttpRequest port 80 == port 65616?: <span style="color: teal" id=out3></span>
+<br>
+TEST 4: XMLHttpRequest port 80 == port 2147483728?: <span style="color: teal" id=out4></span>
+<br>
+TEST 5: XMLHttpRequest port 80 == port 4294967376?: <span style="color: teal" id=out5></span>
+<br>
+TEST 6: XMLHttpRequest honors document.domain? <span style="color: teal" id=out6></span>
+<br>
+TEST 7: XMLHttpRequest reveals httponly cookies? <span style="color: teal" id=out7></span>
+<br>
+TEST 8A: XMLHttpRequest reveals 3xx codes? <span style="color: teal" id=out8></span><br>
+TEST 8B: ...across domains? <span style="color: teal" id=out8a></span>
+<br>
+TEST 9: XMLHttpRequest reveals 5xx codes? <span style="color: teal" id=out9></span>
+<br>
+TEST 10: cookie can be set for first segment of the name (meaningful only for IP-based tests)? <span style="color: teal" id=out10></span>
+<br>
+TEST 11: cookie can be set for last segment of the name? <span style="color: teal" id=out11></span>
+<p>
+
+<script>
+
+var tld = location.host.replace(/.*\./g,''); 
+var lld = location.host.replace(/\w*\./,'');
+var efp = location.pathname.replace('same_origin_misc.html','.empty_file');
+
+try {
+  document.domain = lld;
+  if (document.domain != lld) throw 1;
+  document.getElementById('out1').innerHTML='YES, set to ' + lld;
+} catch (e) {
+  document.getElementById('out1').innerHTML='<font color=red>NO</font>';
+}
+
+try {
+  document.domain = tld;
+  if (document.domain != tld) throw 1;
+  document.getElementById('out2').innerHTML='YES, set to ' + tld;
+} catch (e) {
+  document.getElementById('out2').innerHTML='<font color=red>NO</font>';
+}
+
+try {
+  var x;
+  if (window.XMLHttpRequest)
+    x = new XMLHttpRequest();
+  else
+    x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+  x.open('GET',location.protocol + '//' + location.host + ':65616' + efp, false);
+  x.send(null);
+  document.getElementById('out3').innerHTML='YES';
+} catch (e) {
+  document.getElementById('out3').innerHTML='<font color=red>NO</font>';
+}
+
+try {
+  var x;
+  if (window.XMLHttpRequest)
+    x = new XMLHttpRequest();
+  else
+    x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+  x.open('GET',location.protocol + '//' + location.host + ':2147483728' + efp, false);
+  x.send(null);
+  document.getElementById('out4').innerHTML='YES';
+} catch (e) {
+  document.getElementById('out4').innerHTML='<font color=red>NO</font>';
+}
+
+try {
+  var x;
+  if (window.XMLHttpRequest)
+    x = new XMLHttpRequest();
+  else
+    x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+  x.open('GET',location.protocol + '//' + location.host + ':4294967376' + efp, false);
+  x.send(null);
+  document.getElementById('out5').innerHTML='YES';
+} catch (e) {
+  document.getElementById('out5').innerHTML='<font color=red>NO</font>';
+}
+
+try {
+  var x;
+  if (window.XMLHttpRequest)
+    x = new XMLHttpRequest();
+  else
+    x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+  x.open('GET',location.protocol + '//' + tld + efp, false);
+  x.send(null);
+  document.getElementById('out6').innerHTML='YES';
+} catch (e) {
+  document.getElementById('out6').innerHTML='<font color=red>NO</font>';
+}
+
+try {
+  var x;
+  if (window.XMLHttpRequest)
+    x = new XMLHttpRequest();
+  else
+    x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+  x.open('GET','.set_httponly.php?200', false);
+  x.send(null);
+  if (x.getAllResponseHeaders().indexOf('HTTP_ONLY_COOKIE') == -1) throw 1;
+  document.getElementById('out7').innerHTML='YES';
+} catch (e) {
+  document.getElementById('out7').innerHTML='<font color=red>NO</font>';
+}
+
+try {
+  var x;
+  if (window.XMLHttpRequest)
+    x = new XMLHttpRequest();
+  else
+    x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+  x.open('GET','.set_httponly.php?302', false);
+  x.send(null);
+  if (x.getAllResponseHeaders().indexOf('RESPONSE_VISIBILITY_TEST') == -1) throw 1;
+  document.getElementById('out8').innerHTML='YES';
+} catch (e) {
+  document.getElementById('out8').innerHTML='<font color=red>NO</font>';
+}
+
+try {
+  var x;
+  if (window.XMLHttpRequest)
+    x = new XMLHttpRequest();
+  else
+    x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+  x.open('GET','.redir_ext.php', false);
+  x.send(null);
+  if (x.getAllResponseHeaders().indexOf('RESPONSE_VISIBILITY_TEST') == -1) throw 1;
+  document.getElementById('out8a').innerHTML='YES';
+} catch (e) {
+  document.getElementById('out8a').innerHTML='<font color=red>NO</font>';
+}
+
+try {
+  var x;
+  if (window.XMLHttpRequest)
+    x = new XMLHttpRequest();
+  else
+    x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+  x.open('GET','.set_httponly.php?500', false);
+  x.send(null);
+  if (x.getAllResponseHeaders().indexOf('RESPONSE_VISIBILITY_TEST') == -1) throw 1;
+  document.getElementById('out9').innerHTML='YES';
+} catch (e) {
+  document.getElementById('out9').innerHTML='<font color=red>NO</font>';
+}
+
+try {
+  // Some browsers simply drop invalid 'domain' segments, so we need to detect it.
+  document.cookie = 'TEST1=TEST1_SUCCESS; domain=.' + lld;
+  document.cookie = 'TEST1=CLOBBER';
+  if (document.cookie.indexOf('TEST1_SUCCESS') == -1) throw 1;
+  document.getElementById('out10').innerHTML='YES';
+} catch (e) {
+  document.getElementById('out10').innerHTML='<font color=red>NO</font>';
+}
+
+try {
+  document.cookie = 'TEST2=TEST2_SUCCESS; domain=.' + tld;
+  document.cookie = 'TEST2=CLOBBER';
+  if (document.cookie.indexOf('TEST2_SUCCESS') == -1) throw 1;
+  document.getElementById('out11').innerHTML='YES';
+} catch (e) {
+  document.getElementById('out11').innerHTML='<font color=red>NO</font>';
+}
+
+</script>

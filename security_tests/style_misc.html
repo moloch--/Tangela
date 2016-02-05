@@ -1,0 +1,100 @@
+<body onload="do_tests()">
+<h1>Various CSS tests</h1>
+
+<script>
+var c_red = "red";
+var moz_ok;
+var back_ok;
+
+function getcss(_elem, _style) {
+
+  var computedStyle;
+  var e = document.getElementById(_elem);
+
+  if (typeof e.currentStyle != 'undefined') computedStyle = e.currentStyle;
+  else computedStyle = document.defaultView.getComputedStyle(e, null);
+
+  return computedStyle[_style];
+
+}
+
+</script>
+<style>
+.test {
+  color: blue;
+}
+.test {
+  color: red;
+}
+</style>
+
+<style><!--</style><style>
+.test2 {
+  color: red;
+}
+</style>--></style>
+
+Diagnostics: 
+<span id=test style="color: red">T0</span>
+<span id=expr_sand style="color: expression('red')">T1</span>
+<span id=expr_nosand style="color: expression(c_red)">T2</span>
+<span id=url_sand style="background-image: url('javascript:back_ok=1')">T3</span>
+<span id=moz style="color: blue; -moz-binding: url('http://www/[SERVER_PATH]/.moz_binding.xml#test');">T4</span>
+<span id=pred style="color: blue" style="color: red">T5</span>
+<span id=class class="test">T6</span>
+<span id=comm class="test2">T7</span>
+<p>
+
+<li> CSS supports <code>expression(...)</code>: <font color=teal><span id=expr_out></span></font><br>
+<li> CSS supports <code>url(javascript:...)</code>: <font color=teal><span id=back_out></span></font><br>
+<li> CSS supports <code>-moz-binding</code>: <font color=teal><span id=moz_out></span></font><br>
+<li> Inline CSS precedence: <font color=teal><span id=pred_out></span></font><br>
+<li> CSS class value precedence: <font color=teal><span id=class_out></span></font><br>
+<li> Comment/STYLE block parsing precedence: <font color=teal><span id=comm_out></span></font><br>
+
+<script>
+function do_tests() {
+
+  if (!getcss('test','color')) alert("WARNING: computed CSS not operational, results might be wrong.");
+
+  if (document.getElementById('expr_nosand').style.color.toString().indexOf('red') != -1 || document.getElementById('expr_nosand').style.color == '#ff0000' )
+    document.getElementById('expr_out').innerHTML = 'YES';
+  else if (document.getElementById('expr_sand').style.color.toString().indexOf('red') != -1 || document.getElementById('expr_sand').style.color == '#ff0000')
+    document.getElementById('expr_out').innerHTML = 'IN SANDBOX';
+  else 
+    document.getElementById('expr_out').innerHTML = '<font color=red>NO</font>';
+
+  if (back_ok == 1)
+    document.getElementById('back_out').innerHTML = 'YES';
+  else
+    document.getElementById('back_out').innerHTML = '<font color=red>NO</font>';
+
+  if (moz_ok == 1)
+    document.getElementById('moz_out').innerHTML = 'YES';
+  else
+    document.getElementById('moz_out').innerHTML = '<font color=red>NO</font>';
+
+  if (document.getElementById('pred').style.color.toString().indexOf('red') != -1 || document.getElementById('pred').style.color == '#ff0000')
+    document.getElementById('pred_out').innerHTML = 'LAST';
+  else
+    document.getElementById('pred_out').innerHTML = 'FIRST';
+
+  if (getcss('class','color').toString().indexOf('rgb(255') != -1 || getcss('class','color').toString().indexOf('red') != -1 || 
+      getcss('class','color') == '#ff0000')
+    document.getElementById('class_out').innerHTML = 'LAST';
+  else
+    document.getElementById('class_out').innerHTML = 'FIRST';
+
+  document.getElementById('class_out').innerHTML += ' (' + getcss('class','color') + ')';
+
+  if (getcss('comm','color').toString().indexOf('rgb(255') != -1 || getcss('comm','color').toString().indexOf('red') != -1 || 
+      getcss('comm','color') == '#ff0000')
+    document.getElementById('comm_out').innerHTML = 'STYLE';
+  else
+    document.getElementById('comm_out').innerHTML = 'COMMENT';
+
+  document.getElementById('comm_out').innerHTML += ' (' + getcss('comm','color') + ')';
+
+
+}
+</script>

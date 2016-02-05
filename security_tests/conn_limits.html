@@ -1,0 +1,79 @@
+<h1>Connection limit tests (needs about 30 seconds to complete)</h1>
+
+<input type=submit onclick="start_stuff()" value="Begin testing!">
+<p>
+<b>Result: <span id=result></span></b>
+
+<script>
+var x = [];
+var tr = [];
+
+function start_stuff() {
+
+  var cnt = 0;
+
+  try {
+
+    for (i=0;i<64;i++) {
+
+      if (window.XMLHttpRequest)
+        x[i] = new XMLHttpRequest();
+      else
+        x[i] = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+  
+      x[i].open('GET','.get_time?' + Math.random(), true);
+      x[i].send(null);
+      cnt++;
+
+    }
+
+  } catch (e) { }
+
+  document.getElementById('result').innerHTML = 'initiated ' + cnt + ' attempts, wait...';
+
+  setTimeout('check_results()',30 * 1000);
+
+}
+
+function check_results() {
+
+  var cc = 1;
+
+  for (i=0;i<64;i++) {
+    tr[i] = 0;
+    try {
+      if (x[i].readyState == 4) tr[i] = parseInt(x[i].responseText);
+      else x[i].abort();
+    } catch (e) { }
+  }
+
+  document.getElementById('debug').innerHTML += '0: ' + tr[0] + '<br>';
+
+  if (tr[0] == 0) {
+    document.getElementById('result').innerHTML = 'something went wrong.';
+    return;
+  }
+
+  // Permit a margin of 5 seconds
+
+  for (i=1;i<64;i++) {
+    if (tr[i] && (tr[i] - tr[0] < 6)) cc++;
+    if (tr[i] == 0)
+      document.getElementById('debug').innerHTML += i + ': not completed<br>';
+    else
+      document.getElementById('debug').innerHTML += i + ': diff = ' + (tr[i] - tr[0]) + '<br>';
+  }
+
+  if (cc == 64) 
+    document.getElementById('result').innerHTML = 'more than 64 simultaneous requests permitted';
+   else 
+    document.getElementById('result').innerHTML = cc + ' simultaneous requests permitted';
+
+}
+
+</script>
+
+<p>
+Debug info:
+<div id=debug style="color: gray"></div>
+

@@ -1,0 +1,48 @@
+<h1>Popup restriction checks</h1>
+<body onload="setTimeout('pop_new()',3000)">
+
+<script>
+var moused = false;
+
+function pop_new() {
+  window.open('about:blank','_blank');
+}
+
+</script>
+
+<li>TEST 0: Wait approx. 3 seconds without taking any action. If a new pop-up appears, there seems to be no popup blocking in place,
+and no point in running tests 1 to 3.<p>
+
+<li>TEST 1: hover over <span style="color:teal" onmouseover="if (!moused) pop_new();moused = true">this text</span>.
+If a new window is opened, popup blocking permits popups on mouseover actions (which is sloppy).<p>
+
+<li>TEST 2: click these links (and wait the appropriate amount of time) until you hit one that opens a new window, in order to estimate the 
+maximum delay between clicking on a link
+and a pop-up being permitted: 
+<a href="#" onclick="setTimeout('pop_new()',4800)">5 seconds</a>,
+<a href="#" onclick="setTimeout('pop_new()',3800)">4 seconds</a>,
+<a href="#" onclick="setTimeout('pop_new()',2800)">3 seconds</a>,
+<a href="#" onclick="setTimeout('pop_new()',1800)">2 seconds</a>,
+<a href="#" onclick="setTimeout('pop_new()',900)">1 seconds</a>,
+<a href="#" onclick="setTimeout('pop_new()',400)">500 ms</a>,
+<a href="#" onclick="setTimeout('pop_new()',220)">250 ms</a>,
+<a href="#" onclick="setTimeout('pop_new()',90)">100 ms</a>,
+<a href="#" onclick="setTimeout('pop_new()',8)">10 ms</a>,
+<a href="#" onclick="pop_new()">0 ms (direct code path)</a>.<p>
+
+<li>TEST 3: close all opened windows, then <a href="#" onclick="for (i=0;i<10;i++) pop_new()">click here</a> to see how many windows may
+be opened in response to one click. Up to ten windows would be opened; count them to get the result.<p>
+
+<li>TEST 4: close all opened windows, then <a href="#" onclick="for (i=0;i<10;i++) alert('Hello')">click here</a> to see how many <code>window.alert</code>
+alerts may
+be displayed without giving the user an option to suppres further alerts. Up to 10 would be spawned.<p>
+
+<li>TEST 5: close all opened windows, then <a href="#" onclick="for (i=0;i<5;i++) print('Hello')">click here</a> to see how many <code>window.print</code>
+calls may be inititated without giving the user an option to suppres further activity. Up to 5 would be spawned.<p>
+
+<li>TEST 6: close all opened windows, then <a href="#" onclick="for (i=0;i<5;i++) confirm('Hello')">click here</a> to see how many <code>window.confirm</code>
+calls may be inititated without giving the user an option to suppres further alerts. Up to 5 would be spawned.<p>
+
+<li>TEST 7: close all opened windows, then <a href="#" onclick="for (i=0;i<5;i++) prompt('Hello')">click here</a> to see how many <code>window.prompt</code>
+calls may be inititated without giving the user an option to suppres further alerts. Up to 5 would be spawned.<p>
+

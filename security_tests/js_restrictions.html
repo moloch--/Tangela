@@ -1,0 +1,18 @@
+<h1>javascript: restriction tests</h1>
+
+<ul>
+<li> SCRIPT javascript: URLs: <span id=scr_out>not permitted</span>
+<li> CSS javascript: URLs: <span id=css_out>not permitted</span>
+<li> EMBED javascript: URLs: <span id=emb_out>not permitted</span>
+<li> APPLET javascript: URLs: <span id=app_out>not permitted</span>
+<li> IFRAME javascript: URLs: <span id=ifr_out>not permitted</span>
+<li> IMG javascript: URLs: <span id=img_out>not permitted</span>
+</ul>
+
+<link rel=stylesheet href="javascript:top.document.getElementById('css_out').innerHTML='PERMITTED'">
+<script src="javascript:top.document.getElementById('scr_out').innerHTML='PERMITTED'"></script>
+<img src="javascript:top.document.getElementById('img_out').innerHTML='PERMITTED'">
+<applet code="javascript:top.document.getElementById('app_out').innerHTML='PERMITTED'"></applet>
+<applet codebase="javascript:top.document.getElementById('app_out').innerHTML='PERMITTED';//" code="foo.class"></applet>
+<embed src="javascript:top.document.getElementById('emb_out').innerHTML='PERMITTED'"></embed>
+<iframe src="javascript:top.document.getElementById('ifr_out').innerHTML='PERMITTED'"></iframe>

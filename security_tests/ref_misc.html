@@ -1,0 +1,25 @@
+<h1>Miscellanous content referencing tests</h1>
+<body>
+
+<a href="http://www.example.com/" id="at"></a>
+
+<li>TEST 1: If <input type=submit value="clicking here" onclick="document.getElementById('at').click()"> takes you to <code>example.com</a>, then 
+<code>.click()</code> can be used to auto-navigate <code>A HREFs</code><p>
+
+<li>TEST 2: Supported effective CSS readback method: <span style="color: teal" id=t2out></span><p>
+
+<script>
+if (document.body.currentStyle)
+  document.getElementById('t2out').innerHTML = 'currentStyle (MSIE)';
+
+if (document.defaultView.getComputedStyle)
+  document.getElementById('t2out').innerHTML += ' getComputedStyle (W3C)';
+else if (!document.body.currentStyle)
+  document.getElementById('t2out').innerHTML = 'NONE';
+
+</script>
+
+<form action=".read_payload.php" method=post enctype="text/plain">
+<input type=hidden name="&=&=&=&" value="&=&=&=&">
+<li> TEST 3: If <input type=submit value="clicking here"> displays the text "&=&=&=&=&=&=&=&", <code>ENCTYPE=text/plain</code> is supported; if percent escape codes are displayed instead, it is not.
+</form>

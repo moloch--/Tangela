@@ -1,0 +1,45 @@
+<body onload="do_tests()">
+<h1>CSS encoding</h1>
+
+<span id=test1 style="content: 't\x65st'">   <!-- C-style hex -->         </span>
+<span id=test2 style="content: 't\65st'">    <!-- Hex with no prefix -->  </span>
+<span id=test3 style="content: 't\101st'">   <!-- Decimal -->             </span>
+<span id=test4 style="content: 't\145st'">   <!-- C-style octal -->       </span>
+<span id=test5 style="content: 't\0145st'">  <!-- Octal with prefix -->   </span>
+<span id=test6 style="content: 't\u0065st'"> <!-- Unicode hex -->         </span>
+<span id=test7 style="content: 't\est'">     <!-- Slash-escape -->        </span>
+<span id=test8 style="content: 't\5st'">     <!-- Premature EOD -->       </span>
+
+<b>Supported CSS escaping schemes:</b>
+<div id=out></div>
+
+<script>
+function do_tests() {
+
+  if (document.getElementById('test1').style.content .indexOf('test') != -1)
+    document.getElementById('out').innerHTML += '<li>C-style hexadecimal (\\xNN)';
+  if (document.getElementById('test2').style.content .indexOf('test') != -1)
+    document.getElementById('out').innerHTML += '<li>Hexadecimal with no x-prefix (\\NN)';
+  if (document.getElementById('test3').style.content .indexOf('test') != -1)
+    document.getElementById('out').innerHTML += '<li>Decimal (\\NNN)';
+  if (document.getElementById('test4').style.content .indexOf('test') != -1)
+    document.getElementById('out').innerHTML += '<li>C-style octal (\\NNN)';
+  if (document.getElementById('test5').style.content .indexOf('test') != -1)
+    document.getElementById('out').innerHTML += '<li>0-prefixed octal (\\0NNN)';
+  if (document.getElementById('test6').style.content .indexOf('test') != -1)
+    document.getElementById('out').innerHTML += '<li>Unicode hexadecimal (\\uNNNN)';
+  if (document.getElementById('test7').style.content .indexOf('test') != -1)
+    document.getElementById('out').innerHTML += '<li>Plain old \\-prefixed literal';
+  if (document.getElementById('test8').style.content .indexOf('t\x05st') != -1)
+    document.getElementById('out').innerHTML += '<li>BONUS: Overly short encoding: accepted Javascript-style.';
+  else if (document.getElementById('test8').style.content.indexOf('t5st') != -1)
+    document.getElementById('out').innerHTML += '<li>BONUS: Overly short encoding: trated as an attempt to escape literal.';
+  else if (document.getElementById('test8').style.content.indexOf('t\\5st') != -1)
+    document.getElementById('out').innerHTML += '<li>BONUS: Overly short encoding: trated as raw literals.';
+  else
+    document.getElementById('out').innerHTML += '<li>BONUS: Overly short encoding: garbled (' +
+      document.getElementById('test8').style.content + ').';
+}
+</script>
+
+

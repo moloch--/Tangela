@@ -1,0 +1,93 @@
+<script>
+var a = 0;
+var valid_chars = [];
+
+
+function tochar(x) {
+  var p;
+
+  if (x <= 32 || x > 126) {
+    p = x.toString(16);
+    if (p.length == 1) p = '0' + p;
+    p = '\\x' + p;
+  } else {
+    p = String.fromCharCode(x);
+    if (p == '<') p = '&lt;'; else
+    if (p == '>') p = '&gt;'; else
+    if (p == '&') p = '&amp;';
+  }
+
+  return p;
+
+}
+
+
+function update_valid() {
+  var ostr = '';
+  var x = 0, px;
+
+  while (x < 256) {
+
+    if (valid_chars[x] != 1) { x++; continue; }
+
+    ostr += ' ' + tochar(x);
+  
+    px = x;
+    while (valid_chars[x] == 1) x++;
+
+    if (x - px > 2) ostr += '-' + tochar(x-1); else
+    if (x - px > 1) ostr += ' ' + tochar(x-1);
+
+  }
+
+  document.getElementById('output').innerHTML = ostr;
+
+}
+    
+
+function dotest() {
+  var x;
+
+  if (a == 0x3a) a++;
+
+  var url = 'xpxp' + String.fromCharCode(a) + ':xpxp';
+
+  // The rationale here is that foo<permitted_char>:bar will be parsed as a full URL
+  // and will throw an exception due to same-origin policy violation; if a character
+  // not permitted in scheme but permitted in URLs as such appears, the string would
+  // be parsed as a local reference (http://whatever/foo%nn:bar), and will go through
+  // with XMLHttpRequest. Joy!
+
+  try {
+    var x;
+    if (window.XMLHttpRequest)
+      x = new XMLHttpRequest();
+    else
+      x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+    x.open('GET',url,false);
+    x.send(null);
+    delete x;
+  } catch (e) {
+    valid_chars[a] = 1;
+    update_valid();
+  }
+
+  document.getElementById('status').innerHTML = 'Now testing: ' + a + ' of 256';
+
+  a++;
+  if (a < 256) setTimeout('dotest()',1);
+
+}
+</script>
+
+<h1>Permitted characters in scheme names</h1>
+
+Status:
+<pre id=status></pre><p>
+
+List of permitted characters:
+<pre id=output></pre>
+<p>
+
+<input type=submit onclick="dotest()" value="Start testing">
+

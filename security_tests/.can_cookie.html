@@ -1,0 +1,17 @@
+<html>
+<body onload="foo()">
+<b><div id=out></div></b>
+
+<script>
+
+function foo() {
+
+  document.cookie="CAN_COOKIE_TEST=1";
+
+  if (document.cookie.indexOf("CAN_COOKIE_TEST") == -1) 
+    document.getElementById('out').innerHTML = 'FAILURE - cannot set cookies.';
+  else
+    document.getElementById('out').innerHTML = 'SUCCESS - can set cookies.';
+}
+
+</script>

@@ -1,0 +1,16 @@
+<h1>Cookie restrictions</h1>
+
+<li> TEST 1: Third-party cookies can be set? (be sure to test browsers in default configuration first to get information
+on default behavior; then close the browser or delete all cookies, and re-test with third-party cookies disabled to get meaningful data
+on P3P behavior etc):<br>
+<iframe src="http://{{ SERVER_IP }}/{{ SERVER_PATH }}/.can_cookie.html"></iframe>
+
+<p>
+
+<li> TEST 2: Can override with P3P? (only meaningful if test 1 resulted in "FAILURE"):<br>
+<iframe src="http://{{ SERVER_IP }}/{{ SERVER_PATH }}/.can_cookie_p3p.php"></iframe>
+
+<p>
+
+<li> TEST 3: "Same domain" rules for third-party cookies (only meaningful likewise):<br>
+<iframe src="http://{{ SERVER_NAME_ALT }}/{{ SERVER_PATH }}/.can_cookie.html"></iframe>

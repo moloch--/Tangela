@@ -1,0 +1,27 @@
+<h1>Window restriction checks</h1>
+
+<li>TEST 1: <a href="#" onclick="window.open('about:blank','_blank','fullscreen=yes')">Click here</a> while your browser window is not maximized. If
+a full screen window is opened, <code>fullscreen=yes</code> works.<p>
+
+<li>TEST 2: <a href="#" onclick="window.open('about:blank','_blank','height=200,width=200')">Click here</a>. If a very small window is opened,
+<code>height=</code> and <code>width=</code> directives work.<p>
+
+<li>TEST 3: <a href="#" onclick="window.open('about:blank','_blank','top=0,left=0')">Click here</a> while your browser window is not maximized. If 
+a new window is opened in the top-left corner of the screen, <code>top=</code> and <code>left=</code> directives work.<p>
+
+<li>TEST 4: <a href="#" onclick="window.open('about:blank','_blank','location=no')">Click here</a>. If the new window has no visible URL bar or other
+indication of the URL, <code>location=no</code> works.<p>
+
+<li>TEST 5: <a href="#" onclick="window.open('about:blank','_blank','menubar=no,titlebar=no,location=no,status=no,scrollbars=no')">Click here</a>. If 
+the window has no chrome (menus, status bars), hiding these elements works.<p>
+
+<li>TEST 6: <a href="#" onclick="setTimeout('window.focus()',5000)">Click here</a>, then immediately switch to another window. If after about 5 seconds,
+this window grabs focus, <code>window.focus()</code> calls work.<p>
+
+<li>TEST 7: <a href="#" onclick="window.blur()">Click here</a> while other windows are open in the background. If this window is moved back and another
+grabs focus, <code>window.blur()</code> works.<p>
+
+<li>TEST 8: <a href="#" onclick="window.moveBy(50,50)">Click here</a> while your browser window is not maximized. If the window is moved, <code>window.move*</code>
+methods work.<p>
+
+<li>TEST 9: <a href="#" onclick="window.close()">Click here</a>. If this window gets closed, <code>window.close()</code> on non-scripted windows works.<p>

@@ -1,0 +1,47 @@
+<h1>Content-Disposition tests</h1>
+<p>
+
+<li>TEST 1: 
+<a href=".cdisp_html.php" target="_blank">Click here</a>. If HTML is displayed, <code>Content-Disposition</code>
+does not work (this triggers a bug in Opera if tried again).<p>
+
+<li>TEST 2:
+<a href=".cdisp_image_fn.php?=?iso-8859-2?b?dGVzdC5qcGc=?=" target="_blank">Click here</a>. If download of 
+<code>test.jpg</code> begins, ?b? encoding is supported. If gibberish is displayed instead, it isn't.<p>
+
+<li>TEST 3:
+<a href=".cdisp_image_fn.php?=?iso-8859-2?q?=74est.jpg?=" target="_blank">Click here</a>. If download of 
+<code>test.jpg</code> begins, ?q? encoding is supported. If gibberish is displayed instead, it isn't.<p>
+
+<li>TEST 4:
+<a href=".cdisp_image_star.php" target="_blank">Click here</a>. If download of 
+<code>test.jpg</code> begins, *= encoding is supported. If gibberish is displayed instead, it isn't.<p>
+
+<li>TEST 5:
+<a href=".cdisp_image_fn.php?%2574est.jpg" target="_blank">Click here</a>. If download of 
+<code>test.jpg</code> begins, stray percent encoding is supported. If gibberish is displayed instead, it isn't.<p>
+
+<li>TEST 6:
+<a href=".cdisp_image_fn.php?test.html" target="_blank">Click here</a>. If download of 
+<code>test.html</code> begins, explicit file extensions override <code>Content-Disposition</code> on non-executable files.
+If <code>test.jpg</code> or <code>test.html.jpg</code> is prompted for instead, it isn't.<p>
+
+<li>TEST 7:
+<a href=".cdisp_image_fn.php?test.exe" target="_blank">Click here</a>. If download of 
+<code>test.exe</code> begins, explicit file extensions override <code>Content-Disposition</code> on EXECUTABLE files.
+If <code>test.jpg</code> or <code>test.exe.jpg</code> is prompted for instead, it isn't.<p>
+
+<li>TEST 8:
+<a href=".cdisp_image.php/test.html" target="_blank">Click here</a>. If download of 
+<code>test.html</code> begins, URL-derived file extensions override <code>Content-Disposition</code> on non-executable files.
+If <code>test.jpg</code> or <code>test.html.jpg</code> is prompted for instead, it isn't.<p>
+
+<li>TEST 9:
+<a href=".cdisp_image.php/test.exe" target="_blank">Click here</a>. If download of 
+<code>test.exe</code> begins, URL-derived ile extensions override <code>Content-Disposition</code> on EXECUTABLE files.
+If <code>test.jpg</code> or <code>test.exe.jpg</code> is prompted for instead, it isn't.<p>
+
+<li>TEST 10:
+<a href=".cdisp_image_fn.php?hello.jpg;world.jpg" target="_blank">Click here</a>. If download of 
+<code>hello.jpg</code> begins, <code>;</code> character is not handled correctly in 
+<code>Content-Disposition</code> headers (<code>hello.jpg;world.jpg</code> means it is).<p>

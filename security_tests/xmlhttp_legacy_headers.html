@@ -1,0 +1,58 @@
+<body onload="do_tests()">
+<h1>XMLHttpRequest (legacy ActiveX) permitted headers</h1>
+
+<b>Test results:</b><br>
+<ul id=log>
+</ul>
+
+<script>
+
+var try_hdrs = [
+  "Accept",
+  "Accept-Charset",
+  "Accept-Encoding",
+  "Accept-Language",
+  "Cache-Control",
+  "Cookie",
+  "Host",
+  "If-Match",
+  "If-Modified-Since",
+  "If-None-Match",
+  "If-Range",
+  "If-Unmodified-Since",
+  "Range",
+  "Transfer-Encoding",
+  "User-Agent",
+  "Vary",
+  "Via",
+  "X-Arbitrary-Header-Field"
+];
+
+function do_tests() {
+
+  for (i=0;i<try_hdrs.length;i++) {
+
+    try {
+      var x;
+      if (!window.ActiveXObject) alert('ActiveXObject-capable browser required for this test.');
+      x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+      x.open('GET', '.read_header.php?' + try_hdrs[i].toUpperCase().replace(/-/g,"_"), false);
+      x.setRequestHeader(try_hdrs[i],'TEST_VALUE');
+      x.send(null);
+      if (x.status != 200)
+        document.getElementById('log').innerHTML += '<li> Setting <code>' + try_hdrs[i] + '</code> probably works (server code ' + x.status + ').';
+      else if (x.responseText.indexOf('TEST_VALUE') == -1)
+        document.getElementById('log').innerHTML += '<li> <font color=red>Setting <code>' + try_hdrs[i] + '</code> has no effect (' + 
+        x.responseText + ').</font>';
+      else
+        document.getElementById('log').innerHTML += '<li> Setting <code>' + try_hdrs[i] + '</code> works.';
+    } catch (e) {
+      document.getElementById('log').innerHTML += '<li> <font color=crimson>Setting <code>' + try_hdrs[i] + '</code> results in an exception.</font>';
+    }
+  }
+
+  document.getElementById('log').innerHTML += '<li> <font color=gray>All tests done.</font>';
+
+}
+</script>
+

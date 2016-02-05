@@ -1,0 +1,23 @@
+<h1>Image format tests</h1>
+<li> Supported image formats: <b><font color=teal><span id=sup></span></font></b><p>
+<li> Unsupported image formats: <b><font color=crimson><span id=unsup></span></font></b><p>
+<hr>
+<script>
+function supported(fmt) {
+  document.getElementById('sup').innerHTML += ' ' + fmt;
+}
+
+function not_supported(fmt) {
+  document.getElementById('unsup').innerHTML += ' ' + fmt;
+}
+</script>
+<b>png</b>: <IMG SRC="images/test.png" onload="supported('png')" onerror="not_supported('png')"><P>
+<b>jpg</b>: <IMG SRC="images/test.jpg" onload="supported('jpg')" onerror="not_supported('jpg')"><P>
+<b>gif</b>: <IMG SRC="images/test.gif" onload="supported('gif')" onerror="not_supported('gif')"><P>
+<b>tif</b>: <IMG SRC="images/test.tif" onload="supported('tif')" onerror="not_supported('tif')"><P>
+<b>bmp</b>: <IMG SRC="images/test.bmp" onload="supported('bmp')" onerror="not_supported('bmp')"><P>
+<b>ico</b>: <IMG SRC="images/test.ico" onload="supported('ico')" onerror="not_supported('ico')"><P>
+<b>tga</b>: <IMG SRC="images/test.tga" onload="supported('tga')" onerror="not_supported('tga')"><P>
+<b>pnm</b>: <IMG SRC="images/test.pnm" onload="supported('pnm')" onerror="not_supported('pnm')"><P>
+<b>pcx</b>: <IMG SRC="images/test.pcx" onload="supported('pcx')" onerror="not_supported('pcx')"><P>
+<b>jp2</b>: <IMG SRC="images/test.jp2" onload="supported('jp2')" onerror="not_supported('jp2')"><P>

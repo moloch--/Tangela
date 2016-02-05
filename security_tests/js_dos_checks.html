@@ -1,0 +1,84 @@
+<h1>Javascript execution limits</h1>
+
+<script>
+function busy_loop() {
+  cnt = 0;
+  st = (new Date()).getTime() / 1000;
+  while (1) {
+    cnt++;
+
+    if (!(cnt % 10000)) {
+      cur = (new Date()).getTime() / 1000;
+      document.getElementById('bout').innerHTML = "Running for: " + (cur-st) + " seconds";
+
+      if (cur - st > 60) {
+        document.getElementById('bout').innerHTML = "Kept running for over 60 seconds, giving up.";
+        return;
+      }
+      delete cur;
+    }
+  }
+
+}
+
+var cur_depth = 50;
+
+function recurse(n) {
+  if (n) recurse(n-1);
+}
+
+
+function call_stack() {
+
+  if (cur_depth > 100000) {
+    document.getElementById('sout').innerHTML = "Last call stack size tested: over 100k, giving up.";
+    return;
+  }
+
+  recurse(cur_depth);
+  document.getElementById('sout').innerHTML = "Last call stack size tested: " + cur_depth;
+  cur_depth = Math.round(cur_depth * 1.1);
+  setTimeout('call_stack()',100);
+}
+
+var cur_heap = 8;
+
+function call_heap() {
+
+  len = Math.pow(2,cur_heap);
+
+  if (len > 1024 * 1024 * 1024) {
+    document.getElementById('hout').innerHTML = "Last heap size tested: 1 GB, giving up";
+    return;
+  }
+
+  use_str = "A";
+
+  for (i=0;i<cur_heap;i++) use_str += use_str;
+
+  delete use_str;
+
+  document.getElementById('hout').innerHTML = "Last heap size tested: " + len;
+
+  cur_heap = Math.round(cur_heap * 1.2);
+
+  setTimeout('call_heap()',100);
+
+}
+
+
+
+</script>
+
+<u>WARNING: These tests are disruptive.</u>
+<p>
+<li> TEST 1: <a href="#" onclick="busy_loop()">Click here</a> to start a busy loop. Observe how long it gets to execute before a 
+warning comes up, then choose an option to terminate the script (if one does not come up for 60 seconds, the script will stop).
+<b><span id=bout></span></b><p>
+<p>
+<li> TEST 2: <a href="#" onclick="call_stack()">Click here</a> to try detect maximum call stack size for Javascript.
+<b><span id=sout></span></b><p>
+
+<li> TEST 3: <a href="#" onclick="call_heap()">Click here</a> to try detect maximum heap size for Javascript.
+<b><span id=hout></span></b><p>
+

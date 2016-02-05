@@ -1,0 +1,13 @@
+<h1>location.* setter override test</h1>
+<script>
+location.__defineGetter__('href',function () {
+  alert('Frame busting intercepted with a rogue setter');
+});
+
+location.__defineGetter__('href', function () {
+  alert('Frame busting intercepted with a rogue getter');
+  return "bork";
+});
+</script>
+<iframe src="http://[SERVER_IP]/[SERVER_PATH]/.frame_bust.html">
+</iframe>

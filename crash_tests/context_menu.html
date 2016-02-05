@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                width: 100%;
+                height: 1000px;
+            }
+        </style>
+    </head>
+    <body contextmenu="context_menu_crash">
+        <h1>Context Menu Crash (Firefox Only)</h1>
+        <p>
+            Right click anywhere to crash.
+        </p>
+        <menu type="context" id="context_menu_crash">
+            {% raw context_menu %}
+        </menu>
+    </body>
+</html>

@@ -1,0 +1,40 @@
+<h1>Context inheritance rules</h1>
+
+<script>
+setTimeout('populate("f1")',500);
+setTimeout('populate("f2")',500);
+
+function populate(n) {
+  var target = frames[n];
+  if (!target) target = open('',n);
+
+  target.document.body.innerHTML = '<div style="height: 100%; width: 100%" onmouseover="document.body.innerHTML = document.domain">Mouse over text</div>';
+}
+
+</script>
+
+<li>TEST 1: Mouse over the frame to reveal if context is inherited from top-level site ([SERVER_NAME]) on <code>about:blank</code>
+IFRAMEs:<br>
+<iframe name=f1 id=f1 src="about:blank">
+</iframe>
+<p>
+<li>TEST 2: Mouse over the frame to reveal if context is inherited from top-level site ([SERVER_NAME]) on <code>javascript:...</code>
+IFRAMEs:<br>
+<iframe name=f2 id=f2 src="javascript:'...'">
+</iframe>
+<p>
+
+<li>TEST 3: <a href="about:blank" target="inh_test3" onclick="setTimeout('populate(\'inh_test3\')',2000)">Click here</a>, wait 2 seconds,
+then mose over displayed
+text in a new window, to repeat the test for newly spawned <code>about:blank</code> windows (if nothing is shown, a new context is created
+and not accessible by parent).<p>
+
+<li>TEST 4: <a href="javascript:'...'" target="inh_test4" onclick="setTimeout('populate(\'inh_test4\')',2000)">Click here</a>, wait 2 seconds,
+then mose over displayed
+text in a new window, to repeat the test for newly spawned <code>javascript:</code> windows (if nothing is shown, a new context is created and
+not accessible by parent).<p>
+
+<li>TEST 5: <a href="data:text/html,..." target="inh_test5" onclick="setTimeout('populate(\'inh_test5\')',2000)">Click here</a>, wait 2 seconds,
+ then mose over displayed
+text in a new window, to repeat the test for newly spawned <code>data:</code> windows (only where data URLs are supported; if nothing is shown,
+new context is created).<p>

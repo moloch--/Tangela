@@ -1,0 +1,422 @@
+<h1>ActiveX control enumeration test</h1>
+
+<span id=sandbox>
+</span>
+
+<p>
+
+<b>Results (now trying: <span id=status>n/a</span>):</b><br>
+<div id=output>
+</div>
+
+<script>
+var  ctrls = [
+
+  [ "007", "test dummy", false ],
+  [ "00024522-0000-0000-C000-000000000046", "RefEdit", false ],
+  [ "0002E541-0000-0000-C000-000000000046", "OWC10", false ],
+  [ "0002E542-0000-0000-C000-000000000046", "OWC10", false ],
+  [ "0002E543-0000-0000-C000-000000000046", "OWC10", false ],
+  [ "0002E546-0000-0000-C000-000000000046", "OWC10", false ],
+  [ "0002E554-0000-0000-C000-000000000046", "OWC10", false ],
+  [ "0002E559-0000-0000-C000-000000000046", "OWC11", false ],
+  [ "0002E55A-0000-0000-C000-000000000046", "OWC11", false ],
+  [ "0002E55B-0000-0000-C000-000000000046", "OWC11", false ],
+  [ "0002E55C-0000-0000-C000-000000000046", "OWC11", false ],
+  [ "0002E55D-0000-0000-C000-000000000046", "OWC11", false ],
+  [ "0006F023-0000-0000-C000-000000000046", "RECIP", false ],
+  [ "0006F024-0000-0000-C000-000000000046", "DOCSITE", false ],
+  [ "0006F063-0000-0000-C000-000000000046", "OVCtl", false ],
+  [ "00E1DB59-6EFD-4CE7-8C0A-2DA3BCAAD9C6", "MicrosoftWorks", false ],
+  [ "012B7A17-97C0-4506-B05C-FE051B88ECB7", "GEFeatureBalloonCoClass", false ],
+  [ "02BF25D5-8C17-4B23-BC80-D3488ABDDC6B", "QuickTime", false ],
+  [ "03a81800-0cd8-11dd-bd0b-0800200c9a66", "GEStyleSelectorContainerCoClass", false ],
+  [ "04661FE8-877E-4157-A08A-A1152B880817", "SYMPROTECTUI", false ],
+  [ "048313F0-A816-11DC-8EBB-C0CA56D89593", "KmlLayerRootCoClass", false ],
+  [ "04A1E553-FE36-4FDE-865E-344194E69424", "msinkaut", false ],
+  [ "051064bb-aef7-4815-82e0-3d155ff09f8a", "GEOptionsCoClass", false ],
+  [ "060D7AC0-4CDC-43C4-9756-7D3FF277EC2C", "NVTL", false ],
+  [ "06DD38D3-D187-11CF-A80D-00C04FD74AD8", "Microsoft", false ],
+  [ "0713E8A2-850A-101B-AFC0-4210102A8DA7", "COMCTL", false ],
+  [ "0713E8D2-850A-101B-AFC0-4210102A8DA7", "COMCTL", false ],
+  [ "07B06095-5687-4D13-9E32-12B4259C9813", "STSUpld", false ],
+  [ "07E8E5BA-2347-47bd-9113-44D275F36205", "GEHtmlDivBalloonCoClass", false ],
+  [ "07f86398-273c-11d7-8bf6-00b0d03daa06", "DirControl", false ],
+  [ "0E59F1D5-1FBE-11D0-8FF2-00A0D10038BC", "MSScriptControl", false ],
+  [ "15beb520-8337-4cb3-97f4-39a8710bc739", "KmlLatLonAltBoxCoClass", false ],
+  [ "15beb520-8337-4cb3-97f4-62e0721371a3", "KmlLatLonBoxCoClass", false ],
+  [ "166B1BCA-3F9C-11CF-8075-444553540000", "SWCtl", false ],
+  [ "1733A125-BB07-491E-A469-5E745D11D6BF", "IVIPLAYERX", false ],
+  [ "17AAB042-98B9-4E1E-85E5-2622517DB8CD", "AEIT", false ],
+  [ "18541884-ADCD-4FD2-B1E6-580ED02BE348", "AEIT", false ],
+  [ "188a4c39-df85-4881-8c94-29b69c307ecf", "MSDTHostCtrl", false ],
+  [ "1A9756EC-9C61-4605-922C-FE624317F938", "IVIAUDIOSRSX", false ],
+  [ "1B0AE5A1-FD65-478C-BC27-CCF2E4DADF61", "IVIAUDIOMODEX", false ],
+  [ "1BF5D7D6-1A65-454D-B4C2-04C6591B5C02", "PropManager", false ],
+  [ "1C82EAD9-508E-11D1-8DCF-00C04FB951F9", "OutlookExpress", false ],
+  [ "1CCCB35C-7924-4244-ADC3-0CCD16034A71", "KmlDocumentCoClass", false ],
+  [ "1d2b4f40-1f10-11d1-9e88-00c04fdcab92", "ThumbCtl", false ],
+  [ "1d7ca30a-3d39-435f-9507-702fe5309312", "KmlObjectBaseCoClass", false ],
+  [ "1EFB6596-857C-11D1-B16A-00C0F0283628", "MSComctlLib", false ],
+  [ "1FBEF3C8-45A0-42E0-8C68-681C4EB26DF7", "LDVPDLGS", false ],
+  [ "2060435E-AB52-49E1-A2EA-5D31645887CF", "SynCtrl", false ],
+  [ "206D8F65-689B-40D0-8F07-8D974CD8884B", "SynCtrl", false ],
+  [ "20DD1B9E-87C4-11D1-8BE3-0000F8754DA1", "MSComCtl2", false ],
+  [ "21CBC128-E397-11D1-B7A0-00A0C99C7131", "Yes", false ],
+  [ "23144a1f-af18-4815-82e0-3d198ef782ab", "GENavigationControlCoClass", false ],
+  [ "232E456A-87C3-11D1-8BE3-0000F8754DA1", "MSComCtl2", false ],
+  [ "233C1507-6A77-46A4-9443-F871F945D258", "SWCtl", false ],
+  [ "248109FB-9941-42DD-8E6C-4CA9510E49B2", "NetMonkey", false ],
+  [ "248DD896-BB45-11CF-9ABC-0080C7E7B78D", "MSWinsock", false ],
+  [ "24BA3CAF-4BE8-4AEC-A7C8-6F47D5684602", "QTOControl", false ],
+  [ "25959BEF-E700-11D2-A7AF-00C04F806200", "MSIE", false ],
+  [ "26DC66FF-F459-4A1C-81F0-07D76A136C71", "NVTL", false ],
+  [ "26ea376a-51e6-11dc-8314-0800200c9a66", "GEEventEmitterCoClass", false ],
+  [ "273380E8-1438-4B2C-95B0-713284FBC302", "Msinfo32", false ],
+  [ "279D6C9A-652E-4833-BEFC-312CA8887857", "VisioViewer", false ],
+  [ "27A59F19-C5CC-4B51-A6CA-A1DEBF81F022", "QTUIPanelControl", false ],
+  [ "288e09a2-927a-49a7-bb24-2988abdd83ef", "GEGlobeCoClass", false ],
+  [ "288e09a2-927a-49a7-bb24-58e48ebad58c", "GEWindowCoClass", false ],
+  [ "288e09a2-927a-49a7-bb24-9481abf8817d", "GEFetchKmlHelper_CoClass", false ],
+  [ "289228DE-A31E-11D1-A19C-0000F875B132", "ListPad", false ],
+  [ "2938abf2-9123-4112-ba24-38771abbc34c", "GESunCoClass", false ],
+  [ "293BB2F8-EA64-4e75-8B94-62C5DAF08707", "VLE", false ],
+  [ "299BE050-E83E-4DB7-A7DA-D86FDEBFE6D0", "RDCHost", false ],
+  [ "2a9990a5-e235-4ae6-972c-edc30b6192e5", "KmlPolygonCoClass", false ],
+  [ "2C247F23-8591-11D1-B16A-00C0F0283628", "MSComctlLib", false ],
+  [ "2D360200-FFF5-11d1-8D03-00A0C959BC0A", "DHTMLEdit", false ],
+  [ "2D360201-FFF5-11d1-8D03-00A0C959BC0A", "DHTMLSafe", false ],
+  [ "2E76B2BF-C603-11D1-826C-00A0C95C0756", "LDVPDLGS", false ],
+  [ "2E76B2C3-C603-11D1-826C-00A0C95C0756", "LDVPDLGS", false ],
+  [ "2F7FC18E-292B-11D2-A795-DFAA798E9148", "Msrtedit", false ],
+  [ "3050f4e1-98b5-11cf-bb82-00aa00bdce0b", "HtmlDlgHelper", false ],
+  [ "3080B77B-D82B-4004-BCC8-DE341AF7D387", "NVTL", false ],
+  [ "314111b8-a502-11d2-bbca-00c04f8ec294", "HxVz", false ],
+  [ "314111c6-a502-11d2-bbca-00c04f8ec294", "HxVz", false ],
+  [ "31F863AD-9D42-4CE5-B6C6-B28542CC33E7", "FHistgram", false ],
+  [ "33393037-2a45-4449-a0ab-4e5f2beff220", "KmlObjectListCoClass", false ],
+  [ "333C7BC4-460F-11D0-BC04-0080C7055A83", "TDCCtl", false ],
+  [ "35053A22-8589-11D1-B16A-00C0F0283628", "MSComctlLib", false ],
+  [ "3523c2fb-4031-44e4-9a3b-f1e94986ee7f", "MsTscAx", false ],
+  [ "352CEF41-C142-4166-8E13-EAB4D91D1D8C", "IVIBOOKMARKX", false ],
+  [ "373FF7F0-EB8B-11CD-8820-08002B2F4F5A", "COMCTL", false ],
+  [ "37536094-0A44-11d3-854B-004005506310", "Microsoft", false ],
+  [ "37C5D6EF-B34A-45E3-8529-B0443B8BAD3C", "BTXPPanel", false ],
+  [ "38c744ab-b64a-4df1-8871-d3479155fadf", "KmlOrientationCoClass", false ],
+  [ "38d274e5-9232-4444-915e-9a5731409fd3", "KmlModelCoClass", false ],
+  [ "38EE5CEE-4B62-11D3-854F-00A0C9C898E7", "MSWebDVD", false ],
+  [ "397d6d52-48dc-4fa5-9736-7afb30ca2850", "KmlMouseEventCoClass", false ],
+  [ "399e09a4-826a-49a7-bb24-2988abdd7700", "KmlLayerCoClass", false ],
+  [ "3a508b42-fffe-4b78-acfd-ef66a94cd156", "KmlIconCoClass", false ],
+  [ "3A697675-4980-4412-9AEC-04E4583F973F", "CrystalEnterprise", false ],
+  [ "3D4E8EE9-5B29-4DFD-AF46-F927984C9A75", "PropManager", false ],
+  [ "3E7FDC60-80A8-4563-A562-0DC01ECF077C", "BtWizard", false ],
+  [ "3E9BAF2D-7A79-11d2-9334-0000F875AE17", "NetMeeting", false ],
+  [ "4060edfe-cc12-489c-9d95-62f7fd9a1a8c", "GESchemaObjectCoClass", false ],
+  [ "4063BE15-3B08-470D-A0D5-B37161CFFD69", "QuickTime", false ],
+  [ "40C57BF5-CA86-11D1-B782-00A0C99C7131", "LDVPDLGS", false ],
+  [ "410381DB-AF42-11D1-8F10-00C04FC2C17B", "COMSNAP", false ],
+  [ "4128E694-4BB9-11D1-8190-00A0C95C0756", "LDVPCTLS", false ],
+  [ "41B23C28-488E-4E5C-ACE2-BB0BBABE99E8", "Internet", false ],
+  [ "438B8ECD-AD2A-11D1-ADEB-0000F87734F0", "TrialEnd", false ],
+  [ "4421FEDE-A45D-11D3-9F7C-005004AE6818", "FPDTC", false ],
+  [ "4421FEE2-A45D-11D3-9F7C-005004AE6818", "FPDTC", false ],
+  [ "448C0E90-792D-469E-9BE1-29735DC58421", "NVTL", false ],
+  [ "44afac41-d98b-4a3f-bb75-5aa4cc4d9763", "KmlStyleCoClass", false ],
+  [ "44F9A03B-A3EC-4F3B-9364-08E0007F21DF", "Control", false ],
+  [ "457A23DF-6F2A-4684-91D0-317FB768D87C", "DShowPreview", false ],
+  [ "46E31370-3F7A-11CE-BED6-00AA00611080", "Forms", false ],
+  [ "47b797f2-e873-4f47-a999-693a9fdf9e54", "KmlScaleCoClass", false ],
+  [ "47C6C527-6204-4F91-849D-66E234DEE015", "SrchUI", false ],
+  [ "49274e02-ac7e-431b-8c24-3005c2f00cb0", "KmlExtrudableGeometryCoClass", false ],
+  [ "49FC0185-4B32-11d1-A40E-00600831F336", "DSDisplayPanel", false ],
+  [ "4C599241-6926-101B-9992-00000B65C6F9", "Forms", false ],
+  [ "4D5B57D3-859A-4370-B44A-BC78BD238FBD", "PropManager", false ],
+  [ "4DB2E429-B905-479A-9EFF-F7CBD9FD52DE", "Swdir", false ],
+  [ "4DC90F0F-5771-491D-9021-DE4EF4E2D340", "FHistgram", false ],
+  [ "4E6AA72F-37A1-40ED-944B-BEB4DEEA3A0B", "PropManager", false ],
+  [ "4eb2f086-c818-447e-b32c-c51ce2b30d31", "MsTscAx", false ],
+  [ "4eb89ff4-7f78-4a0f-8b8d-2bf02e94e4b2", "MsRDP", false ],
+  [ "4EDCB26C-D24C-4e72-AF07-B576699AC0DE", "MsRDP", false ],
+  [ "4FEE6388-CF7A-44BE-9125-0A12E722E299", "AppRegAgent", false ],
+  [ "50E5E3D1-C07E-11D0-B9FD-00A0249F6B00", "RegWizCtrl", false ],
+  [ "50F16B26-467E-11D1-8271-00C04FC3183B", "Preview", false ],
+  [ "52a2aaae-085d-4187-97ea-8c30db990436", "Internet", false ],
+  [ "536604C2-B82E-11D1-8252-00A0C95C0756", "LDVPUI", false ],
+  [ "545AE700-50BF-11D1-9FE9-00600832DB4A", "MMCCtrl", false ],
+  [ "546864f0-1bf8-11dd-bd0b-0800200c9a66", "GELinearRingContainerCoClass", false ],
+  [ "553f44fe-a225-4783-a084-478d54edc63b", "KmlPolyStyleCoClass", false ],
+  [ "56b61e20-0fc6-11dd-bd0b-0800200c9a66", "GEFeatureContainerCoClass", false ],
+  [ "58DA8D8A-9D6A-101B-AFC0-4210102A8DA7", "COMCTL", false ],
+  [ "58DA8D8F-9D6A-101B-AFC0-4210102A8DA7", "COMCTL", false ],
+  [ "5bdb98cc-b3f5-4d33-9a91-cbc986bea087", "CDDBControlApple", false ],
+  [ "5dec30f0-8361-4403-8d65-496a0f1e43cc", "KmlBalloonStyleCoClass", false ],
+  [ "5EA6DA3F-8E19-4B1C-8DD2-7D5F4A644DF2", "IVILANGUAGEX", false ],
+  [ "603C7E80-87C2-11D1-8BE3-0000F8754DA1", "MSComCtl2", false ],
+  [ "612A8624-0FB3-11CE-8747-524153480004", "COMCTL", false ],
+  [ "62D8E956-D636-41AC-9E92-8D1FB73F59E5", "EncViewer", false ],
+  [ "64B4A5AE-0799-11D1-812A-00A0C95C0756", "LDVPTASKFS", false ],
+  [ "65D540C1-859E-49F5-B35B-70821831F7A7", "BTXPPanel", false ],
+  [ "66833FE6-8583-11D1-B16A-00C0F0283628", "MSComctlLib", false ],
+  [ "66CBC149-A49F-48F9-B17A-6A3EA9B42A87", "CompatUI", false ],
+  [ "67331D85-BE17-42f6-8D3F-47B8E8B26637", "MigrationWizard", false ],
+  [ "67DABFBF-D0AB-41fa-9C46-CC0F21721616", "DivXBrowserPlugin", false ],
+  [ "6AE29350-321B-42be-BBE5-12FB5270C0DE", "MsTscAx", false ],
+  [ "6B7E638F-850A-101B-AFC0-4210102A8DA7", "COMCTL", false ],
+  [ "6BF52A52-394A-11d3-B153-00C04F79FAA6", "WMPlayer", false ],
+  [ "6E182020-F460-11CE-9BCD-00AA00608E01", "Forms", false ],
+  [ "6E449683-C509-11CF-AAFA-00AA00B6015C", "ASControls", false ],
+  [ "6e7b1428-73a7-420e-9601-bc0fd12f7881", "KmlEventCoClass", false ],
+  [ "71650000-E8A8-11d2-9652-00C04FC30871", "ThumbCtl", false ],
+  [ "72864BE2-6234-45AA-952D-00C10C34BEEE", "LDVPDLGS", false ],
+  [ "72E2440E-EBEA-49E6-A185-1BE03F723E28", "INETMAILUI", false ],
+  [ "7390f3d8-0439-4c05-91e3-cf5cb290c3d0", "MsRDP", false ],
+  [ "73976BCF-68C7-4923-A575-C0803B2D06D1", "PropManager", false ],
+  [ "7584c670-2274-4efb-b00b-d6aaba6d3850", "MsRDP", false ],
+  [ "78E3DB5D-AA7C-49a6-B2A1-756E600D40D0", "WMIScriptUtils", false ],
+  [ "79176FB0-B7F2-11CE-97EF-00AA006D2776", "Forms", false ],
+  [ "79B46D76-CEC6-4709-96ED-044FB5EA8853", "IVICOLORX", false ],
+  [ "7C730856-A82B-11DC-91EB-7AC855D89593", "KmlLocationCoClass", false ],
+  [ "7cacbd7b-0d99-468f-ac33-22e495c0afe5", "MsTscAx", false ],
+  [ "7F1B4A44-CC11-4B35-9238-68CAF52C9E06", "IVIAUDIOEFFECTX", false ],
+  [ "7F365837-F578-11D1-B7B2-00A0C99C7131", "LDVPDLGS", false ],
+  [ "7F5B7F63-F06F-4331-8A26-339E03C0AE3D", "WMIScriptUtils", false ],
+  [ "7F9BEE62-A608-4124-8756-0331A6DFEBC7", "NVTL", false ],
+  [ "81DC69B2-C686-4CDA-868F-A9DEDE186154", "AudioPlayer", false ],
+  [ "82234936-2623-4B6F-8568-2BC53DCF82FE", "NVTL", false ],
+  [ "82eafae0-1bf8-11dd-bd0b-0800200c9a66", "KmlMultiGeometryCoClass", false ],
+  [ "844F4806-E8A8-11d2-9652-00C04FC30871", "WebViewFolderIcon", false ],
+  [ "84E4FC7D-12E9-4E85-97EB-4A2006A3673C", "IVICAPTUREX", false ],
+  [ "855dbc4d-c8d7-4816-b1ea-a5eba403907e", "KmlStyleMapCoClass", false ],
+  [ "87204702-BEBF-4866-82FF-ECC7EEF41A0B", "NVTL", false ],
+  [ "8856F961-340A-11D0-A96B-00C04FD705A2", "Shell", false ],
+  [ "888D5481-CABB-11D1-8505-00A0C91F9CA0", "VideoRenderCtl", false ],
+  [ "88a9100b-231a-421a-8aab-918bffe22c14", "KmlScreenOverlayCoClass", false ],
+  [ "89623368-8085-11D1-8BF5-00C04FC2145A", "DDSContainerCtl", false ],
+  [ "89643D21-7B2A-11d1-8271-00A0C91F9CA0", "adbanner", false ],
+  [ "8a2cf8a4-b7ea-484b-bf26-5172089c88a0", "KmlColorStyleCoClass", false ],
+  [ "8a2cf8a4-b7ea-484b-bf26-83771abb3281", "KmlColorCoClass", false ],
+  [ "8a36a57e-ced8-4997-b3fb-19801ef969fd", "KmlStyleSelectorCoClass", false ],
+  [ "8A3F59E1-4994-11D1-A40D-00600831F336", "DSStatusBar", false ],
+  [ "8ABBC112-3462-4632-8087-1199A8BEED11", "KmlGroundOverlayCoClass", false ],
+  [ "8AE029D3-08E3-11D1-BAA2-444553540000", "VSFLEX", false ],
+  [ "8AE029D6-08E3-11D1-BAA2-444553540000", "VSFLEX", false ],
+  [ "8BD21D10-EC42-11CE-9E0D-00AA006002F3", "Forms", false ],
+  [ "8BD21D20-EC42-11CE-9E0D-00AA006002F3", "Forms", false ],
+  [ "8BD21D30-EC42-11CE-9E0D-00AA006002F3", "Forms", false ],
+  [ "8BD21D40-EC42-11CE-9E0D-00AA006002F3", "Forms", false ],
+  [ "8BD21D50-EC42-11CE-9E0D-00AA006002F3", "Forms", false ],
+  [ "8BD21D60-EC42-11CE-9E0D-00AA006002F3", "Forms", false ],
+  [ "8D670533-270B-4549-B19B-414FB9C6EBDB", "MSWebDVD", false ],
+  [ "8de80270-0cd6-11dd-bd0b-0800200c9a66", "GESchemaObjectContainerCoClass", false ],
+  [ "8E27C92B-1264-101C-8A2F-040224009C02", "MSCAL", false ],
+  [ "8E3867A3-8586-11D1-B16A-00C0F0283628", "MSComctlLib", false ],
+  [ "8E49A0F9-DB1C-40E1-A4D9-1050F6FB6DC0", "AEIT", false ],
+  [ "8E9145BD-703D-11D1-81C9-00A0C95C0756", "LDVPView", false ],
+  [ "8F6F6788-4009-11D1-8184-00A0C95C0756", "LDVPCTLS", false ],
+  [ "9059f30f-4eb1-4bd2-9fdc-36f43a218f4a", "MsRDP", false ],
+  [ "91581CB1-0E7B-11D1-9D93-00A0C95C1762", "Shelsel2", false ],
+  [ "921BD9FB-4963-11D1-818D-00A0C95C0756", "LDVPCTLS", false ],
+  [ "94b91ab6-ac08-4c5b-9b80-f195024b6923", "KmlCoordArrayCoClass", false ],
+  [ "950B1CDA-1D49-4C78-B8CE-2C0708424D72", "NetMonkey", false ],
+  [ "97240642-F896-11D0-B255-006097C68E81", "MSDTHostCtrl", false ],
+  [ "978C9E23-D4B0-11CE-BF2D-00AA003F40D0", "Forms", false ],
+  [ "978EF314-74E2-40D1-BFCD-EEB1E1A06D07", "IVIVideoWndX", false ],
+  [ "9b935470-ad4a-11d5-b63e-00c04faedb18", "Oracle", false ],
+  [ "9BA05971-F6A8-11CF-A442-00A0C90A8F39", "Shell", false ],
+  [ "9BE31822-FDAD-461B-AD51-BE1D1C159921", "VideoLAN", false ],
+  [ "9C23E22F-BEBE-4e75-86C1-68C08607574B", "GEHtmlStringBalloonCoClass", false ],
+  [ "9ED94440-E5E8-101B-B9B5-444553540000", "COMCTL", false ],
+  [ "9F4D2FA2-54A1-11d1-8267-00A0C91F9CA0", "gotobar", false ],
+  [ "9F81C14C-04C0-4378-9A0F-70B5F25397BC", "AxPlayer", false ],
+  [ "A1230201-1439-4E62-A414-190D0AC3D40E", "PSFactoryBuffer", false ],
+  [ "a220a2df-406f-4d68-9b62-995669ae0c92", "SynCtrl", false ],
+  [ "A36F1A6A-7DD1-4772-9B5B-6E02D4322B46", "PropManager", false ],
+  [ "a4155c74-d67f-11dc-91f3-896c55d89593", "KmlAbstractViewCoClass", false ],
+  [ "a41a4187-5a86-4e26-b40a-856f9035d9cb", "MsTscAx", false ],
+  [ "A4F10B07-299A-4A98-AE1A-7F7595759048", "AEIT", false ],
+  [ "A52BFCF1-6B91-4acc-9566-8F018C044E61", "GEHtmlBalloonCoClass", false ],
+  [ "ABBAB8BD-E4F1-11D1-A42C-00A0C9A243C6", "LDVPDLGS", false ],
+  [ "ABE280B8-0307-4BCE-A6E8-82F4F798308B", "AEIT", false ],
+  [ "ace575fd-1fcf-4074-9401-ebab990fa9de", "MsTscAx", false ],
+  [ "ADB880A6-D8FF-11CF-9377-00AA003B7A11", "Internet", false ],
+  [ "ADC6A792-BEA6-11D3-9287-005004518EC8", "Defrag2000FREEOCX", false ],
+  [ "AE24FDAE-03C6-11D1-8B76-0080C744F389", "ScriptBridge", false ],
+  [ "AFBBB9C6-8A99-11D1-8892-0080C75FFCC4", "LDDATETIME", false ],
+  [ "B0395DA5-6A15-4E44-9F36-9A9DC7A2F341", "MMC", false ],
+  [ "B09DE715-87C1-11D1-8BE3-0000F8754DA1", "MSComCtl2", false ],
+  [ "B0EDF163-910A-11D2-B632-00C04F79498E", "MSVidCtl", false ],
+  [ "B1068D20-A431-4dba-B1F8-990621E8A762", "GEAbstractBalloonCoClass", false ],
+  [ "b177290b-b550-40ee-8920-2bd459a7e382", "SQLReplErrors", false ],
+  [ "b1e81530-2120-11dd-bd0b-0800200c9a66", "GEGeometryContainerCoClass", false ],
+  [ "B29922E4-4279-4319-8153-6064BA4609AF", "GEBalloonState_CoClass", false ],
+  [ "B3E658DF-D425-430C-82C2-D54295915020", "AXVERSION", false ],
+  [ "B4FEC05D-D276-4FD7-B554-37563436F891", "FLVIEW", false ],
+  [ "b50f4299-76e8-475e-b4b6-34b30bd89619", "KmlLodCoClass", false ],
+  [ "b51af65e-b0fb-42b2-b6cc-f97ead2a54ab", "SQLReplError", false ],
+  [ "B53E5C24-6E9D-4C1A-B419-C21DCBF5C74B", "FmViewer", false ],
+  [ "b692b1c4-8973-4db8-9fce-9813a057ed09", "KmlLinkCoClass", false ],
+  [ "b7a51621-758f-42b7-9365-7f8cbcbbed08", "KmlLabelStyleCoClass", false ],
+  [ "B8090105-D177-4AAD-8C4B-A5731785F24D", "PropManager", false ],
+  [ "B89BAD06-8531-4DFF-BCC2-094EBB539027", "BootManager", false ],
+  [ "B90813BD-778F-42BB-89B8-6D1A53968E52", "IVIVRX", false ],
+  [ "B918AB28-1266-2931-E9A2-837488ABC211", "KmlLinearRingCoClass", false ],
+  [ "B91B0CAD-D866-11D1-B78C-00A0C99C7131", "LDVPCTLS", false ],
+  [ "B9B7D40C-0C41-4EAF-B0B5-6B41378C7F48", "CompatUI", false ],
+  [ "BB92D710-790F-46C1-8319-467840C1F5B7", "SgeAutomation", false ],
+  [ "BDD1F04B-858B-11D1-B16A-00C0F0283628", "MSComctlLib", false ],
+  [ "BDEADE98-C265-11D0-BCED-00A0C90AB50F", "OWS", false ],
+  [ "bf356210-dc0b-11dc-95ff-0800200c9a66", "KmlCameraCoClass", false ],
+  [ "bf404da2-7d3b-11d3-b9e5-00c04f79e399", "RstrCC", false ],
+  [ "C192E167-B62B-4B8E-B061-2D4CC1D6518F", "PropManager", false ],
+  [ "C3701884-B39B-11D1-9D68-00C04FC30DF6", "OlePrn", false ],
+  [ "C47195EC-CD7A-11D1-8EA3-00C04F9900D7", "SysColorCtrl", false ],
+  [ "C4D2D8E0-D1DD-11CE-940F-008029004347", "Sysmon", false ],
+  [ "C57DEAF2-E637-4FA0-B510-461C4EF86AEB", "IVIDISPLAYX", false ],
+  [ "C74190B6-8589-11D1-B16A-00C0F0283628", "MSComctlLib", false ],
+  [ "C795D2FE-7776-11D8-9070-00065B840D9C", "MSDDS", false ],
+  [ "C7A40592-EB0C-43B4-A114-327953CCCBF1", "IVINAVIGATIONX", false ],
+  [ "C859248A-513E-11D1-8194-00A0C95C0756", "LDVPCTLS", false ],
+  [ "C8FF0D13-4134-45EF-A6BE-13406B867121", "NetMonkey", false ],
+  [ "CA8A9780-280D-11CF-A24D-444553540000", "AcroPDF", false ],
+  [ "CB927D12-4FF7-4A9E-A169-56E4B8A75598", "QuickTime", false ],
+  [ "CD6C7868-5864-11D0-ABF0-0020AF6B0B7A", "CTREEVIEW", false ],
+  [ "CDE64E8E-6975-4C88-B3C6-DB549F2981B6", "CrystalEnterprise", false ],
+  [ "CF6C5790-3E00-4596-9637-396F571264FD", "PropManager", false ],
+  [ "D11CCB19-770C-40EC-BD26-D52F7019ABEC", "IVIWEBBROWSERX", false ],
+  [ "D27CDB6E-AE6D-11cf-96B8-444553540000", "ShockwaveFlash", false ],
+  [ "D27CDB70-AE6D-11cf-96B8-444553540000", "FlashFactory", false ],
+  [ "d2ea46a7-c2bf-426b-af24-e19c44456399", "MsTscAx", false ],
+  [ "D45FD31B-5C6E-11D1-9EC1-00C04FD7081F", "Agent", false ],
+  [ "d4d285dd-2447-11d7-8bf6-00b0d03daa06", "VsWizard", false ],
+  [ "d6cb4b7a-10cf-4e51-b237-41d59b17cee6", "KmlVec2CoClass", false ],
+  [ "d704c9a6-273b-11d7-8bf6-00b0d03daa06", "MacroPicker", false ],
+  [ "D7053240-CE69-11CD-A777-00DD01143C57", "Forms", false ],
+  [ "DD9DA666-8594-11D1-B16A-00C0F0283628", "MSComctlLib", false ],
+  [ "DE556AEC-1266-2931-2441-0BFC47A92DD2", "KmlLineStringCoClass", false ],
+  [ "DE556AEC-1266-2931-2441-D203819332AF", "KmlContainerCoClass", false ],
+  [ "DE556AEC-1266-7632-8087-9847DEFB2172", "KmlPointCoClass", false ],
+  [ "DE556AEC-F321-1EF3-2441-921ABFEDD133", "KmlFolderCoClass", false ],
+  [ "DFD181E0-5E2F-11CE-A449-00AA004A803D", "Forms", false ],
+  [ "e0ccee92-6573-4549-9721-5cfd87360a01", "KmlLineStyleCoClass", false ],
+  [ "E1F6C504-A8CE-11D3-A324-0080AD303A9A", "DataGrd", false ],
+  [ "e205bead-692d-11d2-8d1b-006008319779", "MSDDS", false ],
+  [ "E23FE9C6-778E-49D4-B537-38FCDE4887D8", "VideoLAN", false ],
+  [ "E5CA59F5-57C4-4DD8-9BD6-1DEEEDD27AF4", "InkEd", false ],
+  [ "e5df9d10-3b52-11d1-83e8-00a0c90dc849", "WebViewFolderIcon", false ],
+  [ "E66DE281-41EC-4B33-BD70-E9385B65BC79", "PropManager", false ],
+  [ "E898C798-02CD-41DA-9F99-90FE1FF788DE", "PropManager", false ],
+  [ "EAE50EB0-4A62-11CE-BED6-00AA00611080", "Forms", false ],
+  [ "EB25AC6F-505C-4F1F-ABA9-E5592002D384", "BootManager", false ],
+  [ "ebe69a72-7483-410c-b50c-2b40885e6f5b", "KmlNetworkLinkCoClass", false ],
+  [ "eca7f061-70d0-4507-babd-f1b0b653cc6a", "KmlRegionCoClass", false ],
+  [ "EDCD23E3-B46F-45FA-B25D-D4A02AD96D13", "OInfo11", false ],
+  [ "EF347A62-BA21-42E4-94A0-1C0A6D7FDFE7", "MiDocViewer", false ],
+  [ "F08DF954-8592-11D1-B16A-00C0F0283628", "MSComctlLib", false ],
+  [ "F0E42D40-368C-11D0-AD81-00A0C90DC8D9", "snpvw", false ],
+  [ "F27237D7-93C8-44C2-AC6E-D6057B9A918F", "dsATLSetupCtrl", false ],
+  [ "f2aa8ff0-0201-11dd-95ff-0800200c9a66", "GEViewCoClass", false ],
+  [ "F32F2026-8607-11D1-8892-0080C75FFCC4", "LDDATETIME", false ],
+  [ "F32F202A-8607-11D1-8892-0080C75FFCC4", "LDDATETIME", false ],
+  [ "f3b378cc-345e-4435-a1b3-788455599c7b", "KmlListStyleCoClass", false ],
+  [ "F418EBA0-6A10-4482-AC2B-2D10C807073A", "SynCtrl", false ],
+  [ "F4BAFF02-F907-11D2-8F8F-00C04F4C3B9F", "CDDBControl", false ],
+  [ "F9043C85-F6F2-101A-A3C9-08002B2F49FB", "MSComDlg", false ],
+  [ "F912DCEC-3462-4632-8087-FEEFB45AE521", "KmlPlacemarkCoClass", false ],
+  [ "F9152AEC-3462-4632-8087-EEE3C3CDDA24", "GEPluginCoClass", false ],
+  [ "F9152AEC-3462-4632-8087-F1232355FD63", "KmlLookAtCoClass", false ],
+  [ "F9152AEC-3462-4632-8087-F123B498BC3C", "KmlGeometryCoClass", false ],
+  [ "F9152AEC-3462-4632-8087-F23539485E40", "KmlFeatureCoClass", false ],
+  [ "F9152AEC-3462-4632-8087-F235A566FE30", "KmlObjectCoClass", false ],
+  [ "F9152AEC-3462-4632-8087-F23CA598FF34", "KmlOverlayCoClass", false ],
+  [ "F9152AEC-3462-9202-3411-175546271882", "KmlCoordCoClass", false ],
+  [ "f99a79e0-13e1-478a-8836-56add3610c90", "KmlIconStyleCoClass", false ],
+  [ "FC7D9E06-3F9E-11d3-93C0-00C04F72DAF7", "HelpViewerWrapper", false ],
+  [ "FC7D9E08-3F9E-11d3-93C0-00C04F72DAF7", "PCHToolBar", false ],
+  [ "FC7D9E09-3F9E-11d3-93C0-00C04F72DAF7", "PCHProgressBar", false ],
+  [ "FC894628-B91D-11D1-8254-00A0C95C0756", "LDVPCTLS", false ],
+  [ "FD49B8C4-41FE-498D-95A0-BD12BADE43A9", "LDVPDLGS", false ],
+  [ "FE38753A-44A3-11D1-B5B7-0000C09000C4", "MSComCtl2", false ],
+  [ "FEA8560F-2E32-42F1-A6F6-96CD1D317D61", "AEIT", false ],
+  [ "FF1C1AB8-C27D-11D1-8263-00A0C95C0756", "EXCHNGUI" ]
+  
+];
+
+var cur = 0;
+var res_ok;
+var res_err;
+var tout;
+var got_new = 0;
+var pass = 1;
+
+function update_results() {
+  var t = '';
+
+  for (i=0;i<ctrls.length;i++) 
+    if (ctrls[i][2] == true)
+      t += '<li> ' + ctrls[i][1] + ' (' + ctrls[i][0] + ') is supported.\n';
+
+  document.getElementById('output').innerHTML = t;
+}
+
+
+function do_next() {
+  res_ok = false;
+  res_err = false;
+  
+  document.getElementById('status').innerHTML = ctrls[cur][1] + ':' + pass;
+
+  tout = setTimeout('cont(2)',4000);
+  
+  document.getElementById('sandbox').innerHTML = '<object classid="clsid:' + ctrls[cur][0] + '" width=10 height=10 style="background-color: teal"' +
+                                                 'onload="cont(true)" onerror="cont(false)" codebase=".empty_file"></object>';
+
+}
+
+function cont(res) {
+
+  if (tout == null) return;
+  clearTimeout(tout);
+  tout = null;
+
+  if (res) {
+
+    if (cur == 0) {
+      document.getElementById('output').innerHTML += '<li> <font color=red><b> Direct clsid: ActiveX access is probably not supported, bailing out.'
+      return;
+    }
+
+    if (ctrls[cur][2] != true) {
+      ctrls[cur][2] = true;
+      update_results();
+      got_new++;
+    }
+
+  }
+
+
+  while (++cur < ctrls.length && ctrls[cur][2] == true);
+
+  if (cur < ctrls.length) {
+
+    setTimeout('do_next()',1);
+
+  } else {
+
+
+    // We had new findings. Let's do another pass.
+    if (got_new > 0) {
+      cur = 0;
+      got_new = 0;
+      pass++;
+      do_next();
+    } else
+      document.getElementById('status').innerHTML = 'ALL DONE - ' + pass + ' passes';
+
+  }
+  
+}
+
+do_next();
+
+</script>

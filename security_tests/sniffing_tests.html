@@ -1,0 +1,39 @@
+<h1>Content sniffing tests</h1>
+
+
+<li> TEST 1: <a href=".return_html.php?" target=_"blank">Click here</a>. If HTML is shown (rather than plain text source or a download prompt),
+empty <code>Content-Type</code> triggers HTML sniffing.<p>
+
+<li> TEST 2: <a href=".return_html.php?wharrgarbl%90%90" target=_"blank">Click here</a>. If HTML is shown again,
+malformed <code>Content-Type</code> triggers HTML sniffing.<p>
+
+<li> TEST 3: <a href=".return_html.php?application/octet-stream" target=_"blank">Click here</a>. If HTML is shown,
+<code>application/octet-stream</code> triggers HTML sniffing.<p>
+
+<li> TEST 4: <a href=".return_html.php?application/binary" target=_"blank">Click here</a>. If HTML is shown,
+<code>application/binary</code> triggers HTML sniffing.<p>
+
+<li> TEST 5: <a href=".return_html.php?application/unknown" target=_"blank">Click here</a>. If HTML is shown,
+<code>application/unknown</code> triggers HTML sniffing.<p>
+
+<li> TEST 6: <a href=".return_html.php?unknown/unknown" target=_"blank">Click here</a>. If HTML is shown,
+<code>unknown/unknown</code> triggers HTML sniffing.<p>
+
+<li> TEST 7: <a href=".return_html.php?application/nonsensical" target=_"blank">Click here</a>. If HTML is shown,
+unrecognized <code>Content-Type</code> triggers HTML sniffing.<p>
+
+<li> TEST 8: <a href=".return_html.php?application/nonsensical%3b%20&file=name.html" target=_"blank">Click here</a>. If HTML is shown,
+unrecognized <code>Content-Type</code> + <code>?filename=foo.html</code> parameter triggers HTML sniffing (only meaningful if test 6 fails).<p>
+
+<li> TEST 9: <a href=".return_html.php/name.html?application/nonsensical" target=_"blank">Click here</a>. If HTML is shown,
+unrecognized <code>Content-Type</code> + <code>/foo.html</code> path triggers HTML sniffing (only meaningful if test 6 fails).<p>
+
+<li> TEST 10: <a href=".return_html.php?text/plain" target=_"blank">Click here</a>. If HTML is shown,
+<code>text/plain</code> triggers HTML sniffing.<p>
+
+<li> TEST 11: <a href=".test_img_mismatch.jpg" target=_"blank">Click here</a>. If a 'HTML' pop-up alert is shown,
+<code>image/*</code> miamatch triggers HTML sniffing.<p>
+
+<li> TEST 12: If the following image is shown, HTTP error codes are ignored for sub-resources: 
+<img src=".return_code_img.php?404"><p>
+

@@ -1,0 +1,95 @@
+<h1>file:/// permission checks</h1>
+<p>
+<b><u>Important - please read:</u></b>
+<li> Create a <code>test.txt</code> with the text "HELLO WORLD" inside it in your <code>C:\</code> (Windows) or <code>/</code> (Linux) directory.
+Make sure it is readable by the current user.
+<li> View source of this document <code>(typically Ctrl-U)</code>, copy and paste it to a new file, then save this file as <code>C:\new_dir\test.html</code>
+(Windows) or <code>/new_dir/test.html</code> (Linux). You can also wget the file, but please avoid saving directly from browser (to avoid MotW or
+Zone.Identifier tagging on Windows).
+<li> Once done, please open the test.html file you created, and write down test results.
+<p>
+<b>Test results:</b><br>
+<ul id=out></ul>
+<p>
+<iframe name=f1 src="http://www.example.com/"></iframe>
+<iframe name=f2 src="file:///c:/test.txt"></iframe>
+<iframe name=f3 src="file:///test.txt"></iframe>
+
+<script>
+if (location.protocol != 'file:') {
+  document.getElementById('out').innerHTML += 'This document needs to be loaded from file:/// for tests to proceed.';
+} else {
+
+  try {
+    var x;
+    if (window.XMLHttpRequest)
+      x = new XMLHttpRequest();
+    else
+      x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+    x.open('GET','http://www.example.com/',false);
+    x.send(null);
+    document.getElementById('out').innerHTML += '<li><font color=red>XMLHttpRequest() to arbitrary sites permitted.</font>';
+  } catch (e) {
+    document.getElementById('out').innerHTML += '<li>XMLHttpRequest() to arbitrary sites not permitted.';
+  }
+
+  try {
+    var x;
+    if (window.XMLHttpRequest)
+      x = new XMLHttpRequest();
+    else
+      x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+    x.open('GET','file:///c:/test.txt',false);
+    x.send(null);
+    document.getElementById('out').innerHTML += '<li><font color=red>XMLHttpRequest() to file:/// permitted (Windows).</font>';
+  } catch (e) {
+    document.getElementById('out').innerHTML += '<li>XMLHttpRequest() to arbitrary file:/// not permitted (Windows).';
+  }
+
+  try {
+    var x;
+    if (window.XMLHttpRequest)
+      x = new XMLHttpRequest();
+    else
+      x = new ActiveXObject('MSXML2.XMLHTTP.3.0');
+    x.open('GET','file:///test.txt',false);
+    x.send(null);
+    document.getElementById('out').innerHTML += '<li><font color=red>XMLHttpRequest() to file:/// permitted (Linux).</font>';
+  } catch (e) {
+    document.getElementById('out').innerHTML += '<li>XMLHttpRequest() to arbitrary file:/// not permitted (Linux).';
+  }
+
+  document.getElementById('out').innerHTML += '<li>Please wait 5 seconds for the remaining tests to take place...';
+
+  setTimeout('check_iframe()',5000);
+
+}
+
+
+function check_iframe() {
+
+  try {
+    if (frames['f1'].location.href != 'http://www.example.com/') throw 1;
+    document.getElementById('out').innerHTML += '<li><font color=red>IFRAME access to arbitrary sites permitted.</font>';
+  } catch (e) {
+    document.getElementById('out').innerHTML += '<li>IFRAME access to arbitrary sites not permitted.';
+  }
+
+  try {
+    if (frames['f2'].location.protocol != 'file:') throw 1;
+    document.getElementById('out').innerHTML += '<li><font color=red>IFRAME access to file:// permitted (Windows).</font>';
+  } catch (e) {
+    document.getElementById('out').innerHTML += '<li>IFRAME access to file:// not permitted (Windows).';
+  }
+
+  try {
+    if (frames['f3'].location.protocol != 'file:') throw 1;
+    document.getElementById('out').innerHTML += '<li><font color=red>IFRAME access to file:// permitted (Linux).</font>';
+  } catch (e) {
+    document.getElementById('out').innerHTML += '<li>IFRAME access to file:// not permitted (Linux).';
+  }
+
+}
+
+
+</script>
